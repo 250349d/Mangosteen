@@ -1,0 +1,40 @@
+{% load static %}
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>ユーザー詳細情報</title>
+</head>
+<body>
+    <h1>ユーザー詳細情報</h1>
+      {% for object in objects %}
+      {{ object.last_name }} {{object.first_name}}
+<form action="{% url 'user_app:detail' user_id=object.id %}" method="post">
+	{% csrf_token %}
+  <fieldset>
+<legend>権限を変更してください</legend>
+    <div>
+      {% if object.is_active %}
+      <input type="radio" id="active1" name="is_active" value=True checked />
+      {% else %}
+      <input type="radio" id="active1" name="is_active" value=True />
+      {% endif %}
+      <label for="true">True</label>
+      {% if object.is_active %}
+      <input type="radio" id="active2" name="is_active" value=False />
+      {% else %}
+      <input type="radio" id="active2" name="is_active" value=False checked />
+      {% endif %}
+      <label for="false">False</label>
+    </div>
+    <div>
+      <button type="submit">変更</button>
+    </div>
+  </fieldset>
+</form>
+      {% endfor %}
+  </table>
+  <p><a href="{% url 'user_app:list' %}">戻る</a></p>
+</body>
+
+</html>

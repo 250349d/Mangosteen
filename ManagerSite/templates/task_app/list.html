@@ -1,0 +1,43 @@
+{% load static %}
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>依頼情報一覧</title>
+</head>
+<body>
+    <h1>依頼情報一覧</h1>
+  <form action="/task-info/">
+    <label for="site-search">Search the site:</label>
+    <input type="search" id="site-search" name="q" />
+
+    <button type="submit">Search</button>
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>依頼ID</th>
+        <th>件名</th>
+        <th>作成日時</th>
+        <th>期限</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in objects %}
+      <tr>
+        <th>{{ object.id }}</th>
+      	<td>{{ object.title }}</td>
+        <td>{{ object.created_at }}</td>
+        <td>{{ object.limit_of_time }}</td>
+	<td>
+    <a href="{% url 'task_app:detail' task_id=object.id %}">詳細</a>
+    <a href="{% url 'task_app:delete' task_id=object.id %}">削除</a>
+	</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+    <p><a href="/mypage/">戻る</a></p>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+{% load static %}
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>依頼詳細情報</title>
+</head>
+<body>
+    <h1>依頼詳細情報</h1>
+<table>
+  <thead>
+    <tr>
+      <th>件名</th>
+      <th>作成日時</th>
+      <th>制限日時</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for object in objects %}
+    <tr>
+      <td>{{ object.title }}</td>
+      <td>{{ object.created_at }}</td>
+      <td>{{ object.limit_of_time }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<table>
+  <thead>
+    <tr>
+      <th>商品名</th>
+      <th>単価</th>
+      <th>個数</th>
+      <th>備考</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for object in objects2 %}
+    <tr>
+      <td>{{ object.product_name }}</td>
+      <td>{{ object.price }}</td>
+      <td>{{ object.quantity }}</td>
+      <td>{{ object.notes }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<table>
+  <thead>
+    <tr>
+      <th>何回目の申請であるか</th>
+      <th>申請日時</th>
+      <th>申請金額</th>
+      <th>承認可否</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for object in objects3 %}
+    <tr>
+      <td>{{ object.id }}</td>
+      <td>{{ object.time }}</td>
+      <td>{{ object.price }}</td>
+      <td>{{ object.status }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  <p><a href="{% url 'task_app:list' %}">戻る</a></p>
+</body>
+
+</html>
