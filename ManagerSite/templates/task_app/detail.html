@@ -16,7 +16,7 @@
     </tr>
   </thead>
   <tbody>
-    {% for object in objects %}
+    {% for object in tasks %}
     <tr>
       <td>{{ object.title }}</td>
       <td>{{ object.created_at }}</td>
@@ -35,7 +35,7 @@
     </tr>
   </thead>
   <tbody>
-    {% for object in objects2 %}
+    {% for object in orders %}
     <tr>
       <td>{{ object.product_name }}</td>
       <td>{{ object.price }}</td>
@@ -55,7 +55,7 @@
     </tr>
   </thead>
   <tbody>
-    {% for object in objects3 %}
+    {% for object in requests %}
     <tr>
       <td>{{ object.id }}</td>
       <td>{{ object.time }}</td>

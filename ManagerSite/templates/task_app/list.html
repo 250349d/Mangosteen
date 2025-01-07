@@ -19,7 +19,7 @@
         <th>依頼ID</th>
         <th>件名</th>
         <th>作成日時</th>
-        <th>期限</th>
+        <th>配達期限</th>
       </tr>
     </thead>
     <tbody>
@@ -30,8 +30,10 @@
         <td>{{ object.created_at }}</td>
         <td>{{ object.limit_of_time }}</td>
 	<td>
-    <a href="{% url 'task_app:detail' task_id=object.id %}">詳細</a>
-    <a href="{% url 'task_app:delete' task_id=object.id %}">削除</a>
+          <a href="{% url 'task_app:detail' task_id=object.id %}">詳細</a>
+          <a href="{% url 'user_app:detail' user_id=object.client_id %}">注文者詳細</a>
+          <a href="{% url 'user_app:detail' user_id=object.worker_id %}">配達員詳細</a>
+          <a href="{% url 'task_app:delete' task_id=object.id %}">削除</a>
 	</td>
       </tr>
       {% endfor %}

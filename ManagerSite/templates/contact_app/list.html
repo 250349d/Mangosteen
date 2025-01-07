@@ -18,20 +18,20 @@
       <tr>
         <th>お問い合わせID</th>
         <th>件名</th>
-	      <th>作成日時</th>
+        <th>作成日時</th>
       </tr>
     </thead>
     <tbody>
       {% for object in objects %}
       <tr>
         <th>{{ object.id }}</th>
-	      <td>{{ object.title}}</td>
+        <td>{{ object.title}}</td>
         <td>{{ object.created_at }}</td>
-	      <td>
+	<td>
           <a href="{% url 'user_app:detail' user_id=object.user_id %}">差出人詳細</a>
           <a href="{% url 'contact_app:detail' contact_id=object.id %}">詳細</a>
           <a href="{% url 'contact_app:delete' contact_id=object.id %}">削除</a>
-	      </td>
+	</td>
       </tr>
       {% endfor %}
     </tbody>

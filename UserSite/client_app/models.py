@@ -81,8 +81,8 @@ class Task(models.Model):
     def __str__(self):
         return self.title
 
-# Transactions model
-class Transactions(models.Model):
+# Transaction model
+class Transaction(models.Model):
     task = models.OneToOneField(
         Task,  # 対応するTaskモデルのクラス名
         on_delete=models.CASCADE,  # Taskが削除されたときに対応するTransactionも削除される
@@ -128,7 +128,8 @@ class Order(models.Model):
     task = models.ForeignKey(
         Task,
         on_delete=models.CASCADE,
-        verbose_name="タスク"
+        related_name="order",
+        verbose_name="商品"
     )
     product_name = models.CharField(
         max_length=150,
@@ -149,3 +150,16 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order {self.id} - Product: {self.product_name}"
+
+class Request(models.Model):
+    task = models.ForeignKey(
+        Task,
+        on_delete=models.CASCADE,
+        related_name="request",
+        verbose_name="申請"
+    )
+    time = models.DateTimeField()
+    price = models.IntegerField()
+    status = models.CharField(
+        max_length=1
+    )
