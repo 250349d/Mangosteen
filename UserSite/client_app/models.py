@@ -24,7 +24,7 @@ class Task(models.Model):
         related_name='client',
         verbose_name="クライアント",
     )
-    worker_id = models.ForeignKey(
+    worker = models.ForeignKey(
         CustomUser,
         on_delete=models.SET(get_sentinel_user),
         related_name='worker',

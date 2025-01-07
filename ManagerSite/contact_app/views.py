@@ -30,7 +30,8 @@ def get_filtered_objects(expression):
 def get_filtered_objects_id(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("SELECT * FROM send_contact_app_contact WHERE id=%s", str(expression))
+            #cursor.execute("SELECT * FROM send_contact_app_contact WHERE id=%s", str(expression))
+            cursor.execute("SELECT * FROM send_contact_app_contact WHERE id=%s", [str(expression)])
             results = namedtuplefetchall(cursor)
         except TypeError:
             print('TypeError')
@@ -41,7 +42,8 @@ def get_filtered_objects_id(expression):
 def delete_object(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("DELETE FROM send_contact_app_contact WHERE id=%s", str(expression))
+            #cursor.execute("DELETE FROM send_contact_app_contact WHERE id=%s", str(expression))
+            cursor.execute("DELETE FROM send_contact_app_contact WHERE id=%s", [str(expression)])
             results = True
         except TypeError:
             print('TypeError')

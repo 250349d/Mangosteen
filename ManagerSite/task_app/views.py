@@ -30,7 +30,8 @@ def get_filtered_objects(expression):
 def get_filtered_objects_client(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("SELECT * FROM client_app_task WHERE client_id=%s", str(expression))
+            #cursor.execute("SELECT * FROM client_app_task WHERE client_id=%s", str(expression))
+            cursor.execute("SELECT * FROM client_app_task WHERE client_id=%s", [str(expression)])
             results = namedtuplefetchall(cursor)
         except TypeError:
             print('TypeError')
@@ -40,7 +41,8 @@ def get_filtered_objects_client(expression):
 def get_filtered_objects_worker(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("SELECT * FROM client_app_task WHERE worker_id=%s", str(expression))
+            #cursor.execute("SELECT * FROM client_app_task WHERE worker_id=%s", str(expression))
+            cursor.execute("SELECT * FROM client_app_task WHERE worker_id=%s", [str(expression)])
             results = namedtuplefetchall(cursor)
         except TypeError:
             print('TypeError')
@@ -50,7 +52,8 @@ def get_filtered_objects_worker(expression):
 def get_filtered_objects_id_task(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("SELECT * FROM client_app_task WHERE id=%s", str(expression))
+            #cursor.execute("SELECT * FROM client_app_task WHERE id=%s", str(expression))
+            cursor.execute("SELECT * FROM client_app_task WHERE id=%s", [str(expression)])
             results = namedtuplefetchall(cursor)
         except TypeError:
             print('TypeError')
@@ -61,7 +64,8 @@ def get_filtered_objects_id_task(expression):
 def get_filtered_objects_id_order(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("SELECT * FROM client_app_order WHERE task_id=%s", str(expression))
+            #cursor.execute("SELECT * FROM client_app_order WHERE task_id=%s", str(expression))
+            cursor.execute("SELECT * FROM client_app_order WHERE task_id=%s", [str(expression)])
             results = namedtuplefetchall(cursor)
         except TypeError:
             print('TypeError')
@@ -72,7 +76,8 @@ def get_filtered_objects_id_order(expression):
 def get_filtered_objects_id_request(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("SELECT * FROM client_app_request WHERE task_id=%s", str(expression))
+            #cursor.execute("SELECT * FROM client_app_request WHERE task_id=%s", str(expression))
+            cursor.execute("SELECT * FROM client_app_request WHERE task_id=%s", [str(expression)])
             results = namedtuplefetchall(cursor)
         except TypeError:
             print('TypeError')
@@ -82,11 +87,16 @@ def get_filtered_objects_id_request(expression):
 def delete_object(expression):
     with connections['user_data'].cursor() as cursor:
         try:
-            cursor.execute("DELETE FROM client_app_request WHERE task_id=%s", str(expression))
-            cursor.execute("DELETE FROM chat_app_massage WHERE task_id=%s", str(expression))
-            cursor.execute("DELETE FROM client_app_transaction WHERE task_id=%s", str(expression))
-            cursor.execute("DELETE FROM client_app_order WHERE task_id=%s", str(expression))
-            cursor.execute("DELETE FROM client_app_task WHERE id=%s", str(expression))
+            #cursor.execute("DELETE FROM client_app_request WHERE task_id=%s", str(expression))
+            cursor.execute("DELETE FROM client_app_request WHERE task_id=%s", [str(expression)])
+            #cursor.execute("DELETE FROM chat_app_massage WHERE task_id=%s", str(expression))
+            cursor.execute("DELETE FROM chat_app_massage WHERE task_id=%s", [str(expression)])
+            #cursor.execute("DELETE FROM client_app_transaction WHERE task_id=%s", str(expression))
+            cursor.execute("DELETE FROM client_app_transaction WHERE task_id=%s", [str(expression)])
+            #cursor.execute("DELETE FROM client_app_order WHERE task_id=%s", str(expression))
+            cursor.execute("DELETE FROM client_app_order WHERE task_id=%s", [str(expression)])
+            #cursor.execute("DELETE FROM client_app_task WHERE id=%s", str(expression))
+            cursor.execute("DELETE FROM client_app_task WHERE id=%s", [str(expression)])
         except TypeError:
             print('TypeError')
 

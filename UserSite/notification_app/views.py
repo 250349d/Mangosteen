@@ -23,7 +23,8 @@ def get_all_objects():
 def get_filtered_objects_id(expression):
     with connections["manager_data"].cursor() as cursor:
         try:
-            cursor.execute("SELECT * FROM notification_app_notification WHERE id=%s", str(expression))
+            #cursor.execute("SELECT * FROM notification_app_notification WHERE id=%s", str(expression))
+            cursor.execute("SELECT * FROM notification_app_notification WHERE id=%s", [str(expression)])
             results = namedtuplefetchall(cursor)
         except TypeError:
             print('TypeError')

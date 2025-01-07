@@ -3,10 +3,10 @@
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>お問い合わせ情報一覧</title>
+    <title>お知らせ情報一覧</title>
 </head>
 <body>
-    <h1>お問い合わせ情報一覧</h1>
+    <h1>お知らせ情報一覧</h1>
   <form action="/notification-info/">
     <label for="site-search">Search the site:</label>
     <input type="search" id="site-search" name="q" />
@@ -37,7 +37,7 @@
       {% endfor %}
     </tbody>
   </table>
-    <p><a href="{% url 'notification_app:create' %}">新規お問い合わせ作成</a></p>
+    <p><a href="{% url 'notification_app:create' %}">新規お知らせ作成</a></p>
     <p><a href="/mypage/">戻る</a></p>
 </body>
 

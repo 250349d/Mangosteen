@@ -154,7 +154,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "last_name", "birthdate", "post_code", "address", "street_address", "telephone_number", "bank_number", "branch_number"]
+    REQUIRED_FIELDS = ["first_name", "last_name", "birthdate", "post_code", "address", "street_address", "telephone_number"]
 
     class Meta:
         verbose_name = _("user")

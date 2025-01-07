@@ -12,7 +12,8 @@ def namedtuplefetchall(cursor):
 def get_filtered_objects(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("SELECT * FROM client_app_transaction WHERE task_id=%s", str(expression))
+            #cursor.execute("SELECT * FROM client_app_transaction WHERE task_id=%s", str(expression))
+            cursor.execute("SELECT * FROM client_app_transaction WHERE task_id=%s", [str(expression)])
             results = namedtuplefetchall(cursor)
         except TypeError:
             print('TypeError')
@@ -23,42 +24,48 @@ def get_filtered_objects(expression):
 def update_payment_client_true(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("UPDATE client_app_transaction SET payment_fee=now() WHERE task_id=%s", str(expression))
+            #cursor.execute("UPDATE client_app_transaction SET payment_fee=now() WHERE task_id=%s", str(expression))
+            cursor.execute("UPDATE client_app_transaction SET payment_fee=now() WHERE task_id=%s", [str(expression)])
         except TypeError:
             print('TypeError')
 
 def update_payment_client_false(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("UPDATE client_app_transaction SET payment_fee=null WHERE task_id=%s", str(expression))
+            #cursor.execute("UPDATE client_app_transaction SET payment_fee=null WHERE task_id=%s", str(expression))
+            cursor.execute("UPDATE client_app_transaction SET payment_fee=null WHERE task_id=%s", [str(expression)])
         except TypeError:
             print('TypeError')
 
 def update_payment_worker_true(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("UPDATE client_app_transaction SET  courier_item_payment_date=now() WHERE task_id=%s", str(expression))
+            #cursor.execute("UPDATE client_app_transaction SET  courier_item_payment_date=now() WHERE task_id=%s", str(expression))
+            cursor.execute("UPDATE client_app_transaction SET  courier_item_payment_date=now() WHERE task_id=%s", [str(expression)])
         except TypeError:
             print('TypeError')
 
 def update_payment_worker_false(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("UPDATE client_app_transaction SET  courier_item_payment_date=null WHERE task_id=%s", str(expression))
+            #cursor.execute("UPDATE client_app_transaction SET  courier_item_payment_date=null WHERE task_id=%s", str(expression))
+            cursor.execute("UPDATE client_app_transaction SET  courier_item_payment_date=null WHERE task_id=%s", [str(expression)])
         except TypeError:
             print('TypeError')
 
 def update_reward_true(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("UPDATE client_app_transaction SET courier_reward_date=now() WHERE task_id=%s", str(expression))
+            #cursor.execute("UPDATE client_app_transaction SET courier_reward_date=now() WHERE task_id=%s", str(expression))
+            cursor.execute("UPDATE client_app_transaction SET courier_reward_date=now() WHERE task_id=%s", [str(expression)])
         except TypeError:
             print('TypeError')
 
 def update_reward_false(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("UPDATE client_app_transaction SET  courier_reward_date=null WHERE task_id=%s", str(expression))
+            #cursor.execute("UPDATE client_app_transaction SET  courier_reward_date=null WHERE task_id=%s", str(expression))
+            cursor.execute("UPDATE client_app_transaction SET  courier_reward_date=null WHERE task_id=%s", [str(expression)])
         except TypeError:
             print('TypeError')
 
