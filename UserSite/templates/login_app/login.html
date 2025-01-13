@@ -39,11 +39,11 @@
     <div class=".contents">
         <img class="furattosa_center" src="{% static 'login_app/images/furattosalogo.png' %}"  width="984" height="329"> 
     </div>
-    <form action="{% url 'login' %}" method="post">
+    <form action="{% url 'login_app:login' %}" method="post">
     {% csrf_token %}
         {{ form.as_p }}
         <p><input type="hidden" name="next" value="{{next}}"></p>
-        <p><a href="{% url 'password_reset'%}">パスワードを忘れた方はこちら</a></p>
+        <p><a href="{% url 'passreset_app:passreset'%}">パスワードを忘れた方はこちら</a></p>
         <div class="login">
         <p><input type="submit" value="ログイン"></p>
         </div>

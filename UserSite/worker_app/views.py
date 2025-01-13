@@ -9,6 +9,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.utils import timezone
 from django.db import transaction
+from django.contrib.auth import get_user_model
+
+CustomUser = get_user_model()
 
 @login_required
 def mypage_view(request):

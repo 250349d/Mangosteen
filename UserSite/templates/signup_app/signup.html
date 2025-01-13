@@ -70,7 +70,7 @@
 </head>
 <body>
     <h1>ユーザー登録</h1>
-    <form action="{% url 'signup' %}" method="post">
+    <form action="{% url 'signup_app:signup' %}" method="post">
     {% csrf_token %}
         {{ form.as_p }}
         <p><input type="submit" value="登録"></p>

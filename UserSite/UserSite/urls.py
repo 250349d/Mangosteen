@@ -19,5 +19,14 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('notification-info/', include("notification_app.urls"))
+    path('homepage/', include("home_app.urls")),
+    path('notification-info/', include("notification_app.urls")),
+    path('send-contact/', include("send_contact_app.urls")),
+    path('signup/', include('signup_app.urls')),
+    path('client/', include('client_app.urls')),
+    path('userdelete/', include('userdelete_app.urls')),
+    path('worker/', include('worker_app.urls')),
+    path('passreset/', include('passreset_app.urls')),
+    path('passchange/', include('passchange_app.urls')),
+    path('login-app/', include('login_app.urls')),
 ]
