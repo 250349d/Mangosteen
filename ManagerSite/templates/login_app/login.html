@@ -4,14 +4,29 @@
 <head>
     <meta charset="utf-8">
     <title>ログイン</title>
+    <!-- スタイルシートのリンク -->
+    <link rel="stylesheet" href="{% static 'manager_app/styles.css' %}">
 </head>
 <body>
-    <h1>ログイン</h1>
-    <form action="{% url 'login'%}" method="post">
-    {% csrf_token %}
-        {{ form.as_p }}
-        <p><input type="hidden" name="next" value="{{next}}"></p>
-        <p><input type="submit" value="ログイン"></p>
-    </form>
+    <div class="login-container">
+        <!-- ロゴとタイトル -->
+        <div class="logo">
+            <img src="{% static 'manager_app/img/flatsa_logo.png' %}" alt="ふらっとさロゴ">
+        </div>
+        <h2>管理者ログイン</h2>
+
+        <!-- ログインフォーム -->
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }} <!-- フォームを<p>で囲む形で描画 -->
+            <p><input type="hidden" name="next" value="{{ next }}"></p>
+            <p><input type="submit" value="ログイン" class="btn"></p>
+        </form>
+
+        <!-- フッター -->
+        <footer>
+            <p>mangosteen</p>
+        </footer>
+    </div>
 </body>
 </html>

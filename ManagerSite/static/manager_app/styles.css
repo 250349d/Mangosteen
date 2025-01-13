@@ -1,0 +1,65 @@
+/* ページ全体のスタイル */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9; /* 背景色 */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* 中央揃え */
+    align-items: center;
+    height: 100vh; /* 画面全体の高さ */
+  }
+  
+  /* ログインフォーム */
+  .login-container {
+    text-align: center; /* テキストの中央揃え */
+    background-color: #fff; /* 背景色 */
+    padding: 20px 40px; /* 内側の余白 */
+    border: 1px solid #ddd; /* 枠線 */
+    border-radius: 8px; /* 角を丸くする */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 影を追加 */
+  }
+  /*ロゴのサイズ調整 */
+   .logo img {
+    display: block;
+    margin: 0 auto;
+    max-width: 50%; /* 画像の幅を半分に設定 */
+    height: auto; /* アスペクト比を維持 */
+}
+  
+  /* フォームタイトルのスタイル */
+  h2 {
+    font-size: 20px;
+    color: #0078d4; /* 青色 */
+    margin-bottom: 20px; /* 下の余白 */
+  }
+  
+  /* 入力フィールドのスタイル */
+  .form-control {
+    width: 100%; /* 幅を100%に */
+    max-width: 250px; /* 最大幅 */
+    padding: 10px; /* 内側の余白 */
+    margin-bottom: 15px; /* 下の余白 */
+    border: 1px solid #ccc; /* 枠線 */
+    border-radius: 4px; /* 角を丸くする */
+    font-size: 16px; /* フォントサイズ */
+  }
+  
+  /* ボタンのスタイル */
+  .btn {
+    width: 100%;
+    max-width: 250px; /* 最大幅 */
+    padding: 10px; /* 内側の余白 */
+    background-color: #0078d4; /* 背景色 */
+    color: #fff; /* テキスト色 */
+    border: none; /* 枠線を削除 */
+    border-radius: 4px; /* 角を丸くする */
+    font-size: 16px; /* フォントサイズ */
+    cursor: pointer; /* マウスオーバー時にポインターを表示 */
+  }
+  
+  /* ボタンのホバー時のスタイル */
+  .btn:hover {
+    background-color: #005fa3; /* ホバー時の色 */
+  }
+  
