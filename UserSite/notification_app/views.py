@@ -14,8 +14,7 @@ def get_all_objects():
     now = datetime.date.today()
     print(now)
     with connections["manager_data"].cursor() as cursor:
-#        cursor.execute("SELECT * FROM notification_app_notification WHERE limit_of_time > date %s ORDER BY created_at DESC", [now])
-        cursor.execute("SELECT * FROM notification_app_notification WHERE limit_of_time > date( %s ) ORDER BY created_at DESC", [now])
+        cursor.execute("SELECT * FROM notification_app_notification WHERE limit_of_time > date %s ORDER BY created_at DESC", [now])
         results = namedtuplefetchall(cursor)
 
     return results
@@ -23,8 +22,7 @@ def get_all_objects():
 def get_filtered_objects_id(expression):
     with connections["manager_data"].cursor() as cursor:
         try:
-            #cursor.execute("SELECT * FROM notification_app_notification WHERE id=%s", str(expression))
-            cursor.execute("SELECT * FROM notification_app_notification WHERE id=%s", [str(expression)])
+            cursor.execute("SELECT * FROM notification_app_notification WHERE id=%s", str(expression))
             results = namedtuplefetchall(cursor)
         except TypeError:
             print('TypeError')
@@ -32,7 +30,7 @@ def get_filtered_objects_id(expression):
 
     return results
 
-#@login_required
+@login_required
 def list_view(request):
     objects = get_all_objects()
     params = {
@@ -40,7 +38,7 @@ def list_view(request):
     }
     return render(request, 'notification_app/list.html', params)
 
-#@login_required
+@login_required
 def detail_view(request, notification_id):
     objects = get_filtered_objects_id(notification_id)
     if objects == None:

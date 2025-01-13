@@ -1,7 +1,11 @@
 from django.db import models
-from django.contrib.auth import get_user_model
-
-CustomUser = get_user_model()
+from django.contrib import auth
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.core.mail import send_mail
+from django.utils import timezone
+from django.contrib.auth.hashers import make_password
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import PermissionsMixin
 
 def get_sentinel_user():
     return CustomUser.objects.get_or_create(
@@ -15,7 +19,6 @@ def get_sentinel_user():
             telephone_number = "None"
     )[0]
 
-# Contact model
 class Contact(models.Model):
     user = models.ForeignKey(
         CustomUser,
@@ -25,12 +28,12 @@ class Contact(models.Model):
     title = models.CharField(
         max_length=60,
         verbose_name="件名",
-        blank=True,
+        blank=False,
         null=True
     )
     content = models.TextField(
         verbose_name="本文",
-        blank=True,
+        blank=False,
         null=True
     )
     created_at = models.DateTimeField(
