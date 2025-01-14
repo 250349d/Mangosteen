@@ -10,6 +10,7 @@ body {
     height: 100vh; /* 画面全体の高さ */
   }
   
+
   /* ログインフォーム */
   .login-container {
     text-align: center; /* テキストの中央揃え */
@@ -62,4 +63,102 @@ body {
   .btn:hover {
     background-color: #005fa3; /* ホバー時の色 */
   }
-  
+
+  .admin-container {/*管理者画面のスタイル*/
+    margin: 20px auto;
+    max-width: 800px; /* 幅の最大値を設定 */
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+header {
+    display: flex;
+    justify-content: space-between; /* ロゴと戻るボタンを左右に配置 */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/*ヘッダーのスタイル*/
+header .logo h1 {
+    font-size: 24px;
+    color: #0078d4;
+    margin: 0;
+}
+
+header .back-button {
+    background-color: #0078d4;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+header .back-button:hover {
+    background-color: #005fa3;
+}
+
+/*表のスタイル*/
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table thead th {
+    background-color: #0078d4;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+table tbody td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* 偶数行の背景色 */
+}
+
+/* 検索フォームのスタイル*/
+.search-form input[type="search"] {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-form button {
+    background-color: #0078d4;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: #005fa3;
+}
+
+
+.footer-links .btn {
+    display: inline-block;
+    background-color: #0078d4;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.footer-links .btn:hover {
+    background-color: #005fa3;
+}
+
