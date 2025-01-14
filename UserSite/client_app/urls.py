@@ -5,9 +5,6 @@ from . import views
 
 app_name = 'client_app'
 urlpatterns = [
-    # マイページ
-    path('mypage/', TemplateView.as_view(template_name='client_app/mypage.html'), name='mypage'),
-
 	# 注文機能
 	path('create-order/', views.create_order, name='create-order'),
 

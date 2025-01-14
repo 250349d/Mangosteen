@@ -13,7 +13,7 @@ def get_sentinel_user():
 	return CustomUser.objects.get_or_create(
 		first_name = "None",
 		last_name = "None",
-		birthdate = '0001-01-01',
+		birthdate = '0000-00-00',
 		post_code = "None",
 		address = "None",
 		street_address = "None",
@@ -172,11 +172,6 @@ class Order(models.Model):
 
 	def __str__(self):
 		return f"Order {self.id} - Product: {self.product_name}"
-
-"""
-def __str__(self):
-    return f"{self.product_name} x {self.quantity}"
-"""
 
 class Request(models.Model):
 	task = models.ForeignKey(
