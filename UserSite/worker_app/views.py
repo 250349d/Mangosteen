@@ -11,6 +11,8 @@ from django.utils import timezone
 from django.db import transaction
 from django.contrib.auth import get_user_model
 
+# 0: 注文済み, 1: 配達中, 2: 承認待ち, 3: 再申請待ち, 4: 配達完了
+
 CustomUser = get_user_model()
 
 @login_required
@@ -19,6 +21,9 @@ def mypage_view(request):
 
 @login_required
 def receive_request_view(request):
+    """
+    受注可能依頼を表示するビュー
+    """
     # 現在時刻で期限切れの依頼を除外
     now = timezone.now()
     pending_tasks = Task.objects.filter(
@@ -32,6 +37,9 @@ def receive_request_view(request):
 
 @login_required
 def confirm_request_view(request, pk):
+    """
+    依頼を受注するビュー
+    """
     task = get_object_or_404(
         Task.objects.select_related('transaction'),
         pk=pk
@@ -89,10 +97,11 @@ def submit_cost_view(request, pk):
 @login_required
 def cancel_request_view(request, pk):
     task = get_object_or_404(Task, pk=pk)
-    if request.method == 'POST':
-        task.status = 'C'  # Canceled
-        task.save()
-        return redirect('requester_home')
+    if task.status == '1' and task.worker == request.user.id: # 確認
+        if request.method == 'POST':
+            task.status = 'C'  # Canceled
+            task.save()
+            return redirect('requester_home')
     return render(request, 'worker_app/cancel_request.html', {'task': task})
 
 @login_required
@@ -126,7 +135,7 @@ def accepted_requests_view(request):
     now = timezone.now()
     tasks = Task.objects.select_related('transaction').prefetch_related('orders').filter(
         worker=request.user,
-        status='A'  # Accepted
+        status='1'  # Accepted
     ).order_by('limit_of_time')
     
     # 各タスクの期限状態を確認
@@ -144,7 +153,7 @@ def accepted_requests_view(request):
 def completed_requests_view(request):
     completed_tasks = Task.objects.filter(
         worker=request.user,
-        status='1'  # Delivered
+        status='4'  # Delivered
     ).exclude(
         status='C'  # Canceled
     ).order_by('-delivery_completion_time')
@@ -155,7 +164,7 @@ def completed_requests_view(request):
 def reward_check_view(request):
     completed_tasks = Task.objects.filter(
         worker=request.user,
-        status='D'  # Delivered
+        status='4'  # Delivered
     ).exclude(
         status='C'  # Canceled
     )

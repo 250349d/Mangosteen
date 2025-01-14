@@ -30,9 +30,9 @@
 <body>
     <div style="text-align: right;">
         {% if user.is_authenticated %}
-            <p>{{ user.username }}さん | <a href="{% url 'logout' %}">ログアウト</a></p>
+            <p>{{ user.username }}さん | <a href="{% url 'login_app:logout' %}">ログアウト</a></p>
         {% else %}
-            <p><a href="{% url 'login' %}">ログイン</a> | <a href="{% url 'signup' %}">新規登録</a></p>
+            <p><a href="{% url 'login_app:login' %}">ログイン</a> | <a href="{% url 'signup_app:signup' %}">新規登録</a></p>
         {% endif %}
     </div>
 
@@ -68,7 +68,7 @@
     </table>
 
     <div style="margin-top: 20px;">
-        <a href="{% url 'home' %}">ホームに戻る</a>
+        <a href="{% url 'worker_app:mypage' %}">ホームに戻る</a>
     </div>
 </body>
 </html>

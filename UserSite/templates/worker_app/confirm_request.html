@@ -127,7 +127,7 @@
         <form method="post">
             {% csrf_token %}
             <button type="submit" class="btn">この依頼を受注する</button>
-            <a href="{% url 'receive_request' %}" class="btn btn-secondary">戻る</a>
+            <a href="{% url 'worker_app:receive_request' %}" class="btn btn-secondary">戻る</a>
         </form>
     </div>
 </body>

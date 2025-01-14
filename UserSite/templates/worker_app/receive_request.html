@@ -72,13 +72,13 @@
                     </div>
                 {% endfor %}
                 
-                <a href="{% url 'confirm_request' pk=task.id %}" class="btn">この依頼を受注する</a>
+                <a href="{% url 'worker_app:confirm_request' pk=task.id %}" class="btn">この依頼を受注する</a>
             </div>
         {% empty %}
             <p>現在、受注可能な依頼はありません。</p>
         {% endfor %}
     </div>
     <br>
-    <a href="{% url 'home' %}" class="btn" style="background-color: #6c757d;">ホームに戻る</a>
+    <a href="{% url 'worker_app:mypage' %}" class="btn" style="background-color: #6c757d;">ホームに戻る</a>
 </body>
 </html>

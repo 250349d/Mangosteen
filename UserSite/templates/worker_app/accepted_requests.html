@@ -73,12 +73,12 @@
                 {% endif %}
                 
                 <div class="button-group">
-                    <a href="{% url 'submit_cost' pk=task.id %}" class="btn btn-success">配達完了・費用申請</a>
-                    <a href="{% url 'cancel_request' pk=task.id %}" class="btn btn-danger" onclick="return confirm('この依頼をキャンセルしますか？');">キャンセル</a>
+                    <a href="{% url 'worker_app:submit_cost' pk=task.id %}" class="btn btn-success">配達完了・費用申請</a>
+                    <a href="{% url 'worker_app:cancel_request' pk=task.id %}" class="btn btn-danger" onclick="return confirm('この依頼をキャンセルしますか？');">キャンセル</a>
                 </div>
             </div>
         {% endfor %}
     {% endif %}
     
-    <a href="{% url 'home' %}" class="btn btn-secondary">ホームに戻る</a>
+    <a href="{% url 'worker_app:mypage' %}" class="btn btn-secondary">ホームに戻る</a>
 {% endblock %}
