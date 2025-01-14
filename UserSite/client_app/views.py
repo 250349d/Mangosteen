@@ -14,23 +14,23 @@ logger = logging.getLogger('django')
 
 # 注文機能
 def create_order(request):
-	if request.method == 'POST':
-		is_success = False
-		error_message = "エラーが発生しました"
-		try:
-			data = json.loads(request.body)
+    if request.method == 'POST':
+        is_success = False
+        error_message = "エラーが発生しました"
+        try:
+            data = json.loads(request.body)
 
 			# 注文情報を取得
-			title = data.get('title')
-			limit_of_time = data.get('limit_of_time')
-			shop_name = data.get('shop_name')
-			shop_post_code = data.get('shop_post_code')
-			shop_address = data.get('shop_address')
-			shop_street_address = data.get('shop_street_address')
+            title = data.get('title')
+            limit_of_time = data.get('limit_of_time')
+            shop_name = data.get('shop_name')
+            shop_post_code = data.get('shop_post_code')
+            shop_address = data.get('shop_address')
+            shop_street_address = data.get('shop_street_address')
 
-			task = Task(
+            task = Task(
 				# 依頼情報
-				client=None, #TODO: ログインユーザーを設定するようにする
+                client=None, #TODO: ログインユーザーを設定するようにする
 				worker=None,
 				title=title,
 				limit_of_time=limit_of_time,
