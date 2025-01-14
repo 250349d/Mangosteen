@@ -46,6 +46,7 @@ def confirm_request_view(request, pk):
     )
     if request.method == 'POST':
         if task.status == '0' and task.worker is None:
+            """
             try:
                 with transaction.atomic():
                     task.status = '1'  # Accepted
@@ -55,6 +56,11 @@ def confirm_request_view(request, pk):
             except Exception as e:
                 print(f"Error accepting task: {e}")
                 return HttpResponse("依頼の受注中にエラーが発生しました", status=500)
+            """
+            task.status = '1'  # Accepted
+            task.worker = request.user
+            task.save()
+            return redirect('worker_app:accepted_requests')
         return HttpResponse("この依頼は既に受注されています", status=400)
 
     orders = Order.objects.filter(task=task)
@@ -132,8 +138,11 @@ def approve_cost_view(request, pk):
 
 @login_required
 def accepted_requests_view(request):
+    """
+    受注済みの依頼を確認するビュー（一覧）
+    """
     now = timezone.now()
-    tasks = Task.objects.select_related('transaction').prefetch_related('orders').filter(
+    tasks = Task.objects.select_related('transaction').prefetch_related('order').filter(
         worker=request.user,
         status='1'  # Accepted
     ).order_by('limit_of_time')
@@ -146,7 +155,7 @@ def accepted_requests_view(request):
             time_remaining = task.limit_of_time - now
             # 残り1時間以内の場合は警告
             task.is_urgent = time_remaining.total_seconds() <= 3600
-    
+
     return render(request, 'worker_app/accepted_requests.html', {'tasks': tasks})
 
 @login_required

@@ -173,6 +173,11 @@ class Order(models.Model):
 	def __str__(self):
 		return f"Order {self.id} - Product: {self.product_name}"
 
+"""
+def __str__(self):
+    return f"{self.product_name} x {self.quantity}"
+"""
+
 class Request(models.Model):
 	task = models.ForeignKey(
 		Task,
