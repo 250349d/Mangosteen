@@ -23,6 +23,7 @@ body {
 /* メッセージ表示エリア */
 .message-container {
 	height: 90%;
+	font-size: 2vw;
 	overflow-y: scroll;
 	background-color: whitesmoke;
 }
@@ -30,40 +31,56 @@ body {
 /* メッセージ */
 .message {
 	background-color: lightgreen;
-	border-radius: 10px;
-	margin: 10px 0;
+	border-radius: 2em;
+	max-width: 60vw;
 	width: fit-content;
+	margin: 1em 0;
+	padding: 1vw 2vw;
+	display: flex;
+	align-items: flex-end;
+	flex-direction: row;
 }
 
 .left-message {
 	text-align: left;
 }
 
+.left-message .message-info {
+	order: 2;
+}
+
+.left-message .message-text {
+	order: 1;
+}
+
 .right-message {
-	text-align: right;
+	text-align: left;
 	margin-left: auto;
 }
 
-.message-time {
+.message-info {
 	color: white;
+	font-size: 1em;
+	margin: 0.8vw;
 }
 
 .message-text {
-	font-size: 20px;
-	margin-left: 2px;
-	margin-right: 2px;
 	color: black;
-}
-
-.message-read-flag {
-	color: white;
+	font-size: 2.4em;
+	word-break: break-word;
+	vertical-align: bottom;
 }
 
 /* 日付区切り */
 .date-divider {
-	margin: 10px 0;
+	color: gray;
+	font-size: 1.8em;
+	background-color: white;
+	border-radius: 1em;
+	padding: 4px;
+	width: 16vw;
 	text-align: center;
-	color: black;
+	margin: 1vw auto;
 }
 
 /* メッセージ入力エリア */
@@ -79,6 +96,7 @@ body {
 	color: black;
 	text-align: left;
 	vertical-align: top;
+	resize: none;
 }
 
 .message-input::placeholder {
@@ -90,4 +108,7 @@ body {
 	vertical-align: top;
 	margin: 0;
 	color: blue;
+	width: 6%;
+	aspect-ratio: 1/1;
+	font-size: 2em;
 }

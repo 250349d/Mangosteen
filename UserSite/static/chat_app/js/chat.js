@@ -55,6 +55,20 @@ window.onload = function () {
 				messageContainer.appendChild(dateDividerElement);
 			}
 
+			// 既読フラグと時間の要素を作成
+			const messageInfoElement = document.createElement('div');
+			messageInfoElement.classList.add('message-info');
+
+			// readFlagが存在する場合は既読フラグ要素を作成
+			const readFlagElement = document.createElement('div');
+			readFlagElement.classList.add('message-read-flag');
+			if (readFlag !== undefined) {
+				readFlagElement.textContent = readFlag ? '既読' : '未読';
+			} else {
+				readFlagElement.innerHTML = '&nbsp;'; // 既読フラグが存在しない場合は空白を挿入
+			}
+			messageInfoElement.appendChild(readFlagElement);
+
 			// 送信時間要素を作成
 			const sendTimeElement = document.createElement('div');
 			sendTimeElement.classList.add('send-time-container');
@@ -70,21 +84,16 @@ window.onload = function () {
 			timeElement.textContent = timeString;
 			sendTimeElement.appendChild(timeElement);
 
-			messageElement.appendChild(sendTimeElement);
+			messageInfoElement.appendChild(sendTimeElement);
+
+			messageElement.appendChild(messageInfoElement);
 
 			// テキスト要素を作成
-			const textElement = document.createElement('span');
+			const textElement = document.createElement('div');
 			textElement.classList.add('message-text');
-			textElement.textContent = text;
+			textElement.innerHTML = text.replace(/\n/g, '<br>');
+			//textElement.textContent = text;
 			messageElement.appendChild(textElement);
-
-			// readFlagが存在する場合は既読フラグ要素を作成
-			if (readFlag !== undefined) {
-				const readFlagElement = document.createElement('span');
-				readFlagElement.classList.add('message-read-flag');
-				readFlagElement.textContent = readFlag ? '既読' : '未読';
-				messageElement.appendChild(readFlagElement);
-			}
 
 			// メッセージコンテナにメッセージ要素を追加
 			messageContainer.appendChild(messageElement);
