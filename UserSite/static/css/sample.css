@@ -1,35 +1,553 @@
-.contents{
-    width: 150px;
-    height: auto;
-    position: relative; /* relativeは基準となる親要素 */
+/* ホームページ */
+.logo_home{
+    text-align:center;
 }
 
-.furattosa_center{
-    position: absolute;
-    top: 45%;                       /* 画面上の位置指定(上半分 : 下半分 = 45 : 55) */
-    transform: translateY(-50%);    /* 画像の高さの50%を指定 */
+.furattosalogo_home{
+    width:100%;
+    height:auto;
 }
 
-.login_mail{
-    position: absolute;
-    top: 20px; /* 親要素の上から20px */
-    left: 300px;
-    width: 1000px;
-    height: 1000px;
-    /* background-color:  */
-}
-
-.login{
+.homepage {
+    text-align:center;
+    /* background-color: #f9f9f9; 
+    border: 1px solid #ddd; */
+} 
+/* ログインフォーム遷移ボタン */
+.home_login{
+    width:50%;
+    margin-top: 150px;  /* 必要な空白の大きさに調整 */
     background-color: #fff;
     border: solid 2px #2495e0;
     color: #2495e0;
-    border-radius: 20px; 
-    padding: 10px 30px;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
     text-decoration: none;
-    font-size: 4em;
+    font-size: 18px;
 }
 
-.login:hover {
+.home_login:hover {
     color:  #fff;
     background-color: #2495e0;
+}
+
+/* 新規会員登録遷移ボタン */
+.home_signup{
+    width:50%;
+    margin-top: 50px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.home_signup:hover {
+    color:  #fff;
+    background-color: #2495e0;
+}
+
+.home_terms_of_use{
+    width:50%;
+    margin-top: 50px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.home_terms_of_use:hover {
+    color:  #fff;
+    background-color: #2495e0;
+}
+
+.home_about_site{
+    width:50%;
+    margin-top: 50px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.home_about_site:hover {
+    color:  #fff;
+    background-color: #2495e0;
+}
+
+
+
+
+/* 共通*/
+ .logo{
+    text-align:center;
+ } 
+
+.furattosalogo{
+    width:60%;
+    height:auto;
+ }   
+
+form {
+    text-align:center;
+    max-width: 100%;
+    margin: 50px auto;
+    padding: 20px;
+    /* background-color: #f9f9f9; 
+    border: 1px solid #ddd; */
+} 
+
+form .return{
+    width:30%;
+    margin-top: 150px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+form .return:hover {
+    color:  #fff;
+    background-color: #2495e0;
+}
+
+
+/*ログイン*/
+form input[type="text"],
+form input[type="password"] {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+form a {
+    margin-bottom: 10px;  /* 必要な空白の大きさに調整 */
+}
+
+/* ログインボタン */
+form input[type="submit"].login {
+    width:50%;
+    margin-top: 150px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+form input[type="submit"]:hover {
+    color:  #fff;
+    background-color: #2495e0;
+}
+
+
+/* パスワード再設定 */
+form .passreset{
+    color: #2495e0;
+}
+
+form .input_mail{
+    margin-top:50px;  /* 必要な空白の大きさに調整 */
+    font-size: 18px;
+}
+
+form input[type="email"] {
+    width:50%;
+    margin-top:20px;  /* 必要な空白の大きさに調整 */
+    font-size: 18px;
+}
+
+/* 送信ボタン */
+form .transmission{
+    width:30%;
+    margin-top: 150px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+
+
+
+/* 新規登録 */
+.signup{
+    text-align:center;
+    color: #2495e0;
+}
+
+form .notification_s{
+    margin-top:50px;  /* 必要な空白の大きさに調整 */
+    font-size: 18px;
+}
+
+form .registration{
+    width:30%;
+    margin-top: 150px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+form .registration:hover {
+    color:  #fff;
+    background-color: #2495e0;
+}
+
+
+
+/* パスワード変更 */
+.password_change{
+    text-align:center;
+    color: #2495e0;
+}
+
+form .decision{
+    width:20%;
+    margin-top: 150px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+
+
+
+/* マイページ */
+.mypage{
+    text-align:center;
+}
+
+.create_order {
+    width:50%;
+    margin-top: 50px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.create_order:hover {
+    color:  #fff;
+    background-color: #2495e0;
+}
+
+.check_order {
+    width:50%;
+    margin-top: 50px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.check_order:hover {
+    color:  #fff;
+    background-color: #2495e0;
+}
+
+.check_completed {
+    width:50%;
+    margin-top: 50px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.check_completed:hover {
+    color:  #fff;
+    background-color: #2495e0;
+}
+
+.check_payment {
+    width:50%;
+    margin-top: 50px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.check_payment:hover {
+    color:  #fff;
+    background-color: #2495e0;
+}
+
+
+/* ここから下がハンバーガーメニューに関するCSS */
+  
+/* チェックボックスを非表示にする */
+.drawer_hidden {
+    display: none;
+    width:200px;
+    height:200px;
   }
+  
+  /* ハンバーガーアイコンの設置スペース */
+  .drawer_open {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 2%;
+    z-index: 100;/* 重なり順を一番上にする */
+    cursor: pointer;
+    margin-top: 20px;  /* 必要な空白の大きさに調整 */
+    margin-right: 20px;  /* 必要な空白の大きさに調整 */
+  }
+  
+  /* ハンバーガーメニューのアイコン */
+  .drawer_open span,
+  .drawer_open span:before,
+  .drawer_open span:after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 25px;
+    border-radius: 3px;
+    background: #333;
+    transition: 0.5s;
+    position: absolute;
+  }
+  
+  /* 三本線の一番上の棒の位置調整 */
+  .drawer_open span:before {
+    bottom: 8px;
+  }
+  
+  /* 三本線の一番下の棒の位置調整 */
+  .drawer_open span:after {
+    top: 8px;
+  }
+  
+  /* アイコンがクリックされたら真ん中の線を透明にする */
+  #drawer_input:checked ~ .drawer_open span {
+    background: rgba(255, 255, 255, 0);
+  }
+  
+  /* アイコンがクリックされたらアイコンが×印になように上下の線を回転 */
+  #drawer_input:checked ~ .drawer_open span::before {
+    bottom: 0;
+    transform: rotate(45deg);
+  }
+  
+  #drawer_input:checked ~ .drawer_open span::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+    
+  /* メニューのデザイン*/
+  .nav_content {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    bottom: 100%;
+    left: 0%; /* メニューを画面の外に飛ばす */
+    z-index: 99;
+    background: rgb(181, 244, 255);
+    transition: .5s;
+    text-align: center;
+    padding-top: 20px;
+  }
+  
+  /* メニュー黒ポチを消す */
+  .nav_list {
+    list-style: none;
+    font-size: 18px;
+  }
+  
+  .nav_item a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  /* アイコンがクリックされたらメニューを表示 */
+  #drawer_input:checked ~ .nav_content {
+    bottom: 0;/* メニューを画面に入れる */
+    
+  }
+
+.my_passchange{
+    margin-top: 80px;  /* 必要な空白の大きさに調整 */
+}
+
+
+
+/* パスワード変更 */
+.save{
+    width:30%;
+    margin-top: 50px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* お問い合わせ */
+.send_contact{
+    text-align:center;
+    color:#2495e0
+}
+
+form .transmission{
+    width:30%;
+    margin-top: 150px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* 注文作成 */
+.c_create_order{
+    text-align:center;
+    color:#2495e0
+}
+
+.t_create_order{
+    text-align:center;
+}
+
+
+/* テーブル全体の枠線 */
+table {
+    width: 100%;
+    border-collapse: collapse; /* 枠線が二重にならないようにする */
+}
+
+/* テーブルヘッダーとセルの枠線 */
+th, td {
+    border: 1px solid #ddd; /* 枠線の色 */
+    padding: 8px;          /* セル内の余白 */
+    text-align: left;      /* テキストを左寄せ */
+}
+
+/* ヘッダーの背景色 */
+th {
+    background-color: #f2f2f2;
+}
+
+button[type="button"].create_table{
+    width:40%;
+    margin-top: 30px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+button[type="button"].create_table:hover {
+    color:  #fff;
+    background-color: #2495e0;
+}
+
+.total{
+    text-align:center;
+    width:50%;
+    margin-top: 30px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+   
+}
+
+.limit{
+    text-align:center;
+    width:50%;
+    margin-top: 30px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+   
+}
+
+.order_confirmed{
+    width:40%;
+    margin-top: 150px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.return{
+    width:30%;
+    margin-top: 150px;  /* 必要な空白の大きさに調整 */
+    background-color: #fff;
+    border: solid 2px #2495e0;
+    color: #2495e0;
+    border-radius: 10px;        /*図形の角の丸さ */
+    padding: 8px 13px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.shop_info{
+    text-align:center;
+    margin: 50px auto;
+}
+
+/* 注文詳細 */
+.order_address{
+    color: #2495e0;
+}
