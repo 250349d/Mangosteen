@@ -209,6 +209,7 @@ def accept_request(request):
 			order_request.save()
 
 			task.status = '3' # 注文ステータスを支払い待ちに変更
+			task.save()
 
 			# 申請金額による取引情報の更新
 			summarize_financials(task, order_request.price)
@@ -279,6 +280,7 @@ def reject_request(request):
 			order_request.save()
 
 			task.status = '1' # 注文ステータスを配達中に変更
+			task.save()
 
 			#非承認メールを配達員に送信
 			send_mail(
@@ -401,6 +403,7 @@ def payment(request, task_id):
 			transaction.save()
 
 			task.status = '4' # 注文ステータスを支払い完了に変更
+			task.save()
 
 			is_success = True
 		except Exception as e:
