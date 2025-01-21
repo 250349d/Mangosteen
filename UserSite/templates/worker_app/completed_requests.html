@@ -1,27 +1,58 @@
 {% extends 'worker_app/base.html' %}
 {% load static %}
 
-{% block title %}完了済み依頼一覧 - ふらっとさ{% endblock %}
+{% block title %}完了した配達依頼 - ふらっとさ{% endblock %}
 
 {% block content %}
 <div class="request-list">
-    <h1>完了済み依頼一覧</h1>
-    {% if completed_requests %}
-        {% for request in completed_requests %}
+    <h1>完了した配達依頼</h1>
+    
+    {% if tasks %}
+        {% for task in tasks %}
             <div class="request-item">
-                <h2>{{ request.title }}</h2>
-                <p>依頼者: {{ request.created_by.username }}</p>
-                <p>完了日時: {{ request.created_at|date:"Y/m/d H:i" }}</p>
-                <p>配達先: {{ request.delivery_address }}</p>
-                <p class="status-badge status-completed">完了済み</p>
+                <div class="request-header">
+                    <h2>{{ task.title }}</h2>
+                    <!-- {% if task.is_paid %}
+                        <span class="status-badge status-completed">支払い完了</span>
+                    {% else %}
+                        <span class="status-badge status-pending">支払い待ち</span>
+                    {% endif %} -->
+                </div>
+                
+                <div class="request-details">
+                    <div class="detail-item">
+                        <strong>店舗名:</strong>
+                        <span>{{ task.shop_name }}</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <strong>配達完了時間:</strong>
+                        <span>{{ task.delivery_completion_time|date:"Y/m/d H:i" }}</span>
+                    </div>
+                    
+                    {% if task.transaction %}
+                        <div class="detail-item">
+                            <strong>報酬金額:</strong>
+                            <span>{{ task.transaction.courier_reward_amount }}円</span>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="detail-item">
+                        <strong>住所:</strong>
+                        <span>{{ task.shop_address }} {{ task.shop_street_address }}</span>
+                    </div>
+                </div>
             </div>
         {% endfor %}
     {% else %}
-        <p class="no-items">完了済みの依頼はありません。</p>
+        <div class="no-items">
+            <p>完了した配達依頼はありません。</p>
+        </div>
     {% endif %}
     
     <div class="navigation-buttons">
         <a href="{% url 'worker_app:mypage' %}" class="btn-outline">マイページに戻る</a>
     </div>
 </div>
+
 {% endblock %}
