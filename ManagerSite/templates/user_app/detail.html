@@ -1,16 +1,83 @@
+{% load browser_back %}
 {% load static %}
 <!doctype html>
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>ユーザー詳細情報</title>
+    <title>ユーザー情報一覧</title>
+    <link rel="stylesheet" href="{% static 'common/css/common.css' %}">
 </head>
 <body>
-    <h1>ユーザー詳細情報</h1>
+    <div id="list" class="big-bg">
+        <header class="page-header wrapper">
+		<h1><a href="{% url 'mypage_app:mypage' %}"><img class="logo" src="{% static 'common/img/logo.svg' %}" alt="ふらっとさ 管理者用ページ"></a></h1>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="{% url 'passchange_app:passchange' %}">パスワード変更</a></li>
+                    <li><a href="{% url 'login_app:logout' %}">ログアウト</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="list-contents wrapper">
+            <article>
+                <header class="post-info">
+                    <h2 class="post-title">
+                        ユーザー情報一覧
+                    </h2>
+                </header>
       {% for object in objects %}
-      {{ object.last_name }} {{object.first_name}}
-<form action="{% url 'user_app:detail' user_id=object.id %}" method="post">
-	{% csrf_token %}
+      <table>
+  <tr>
+    <th>氏名</th>
+    <td>{{ object.last_name }} {{object.first_name}}</td>
+  </tr>
+  <tr>
+    <th>生年月日</th>
+    <td>{{ object.birthdate }}</td>
+  </tr>
+  <tr>
+    <th>郵便番号</th>
+    <td>{{ object.post_code }}</td>
+  </tr>
+  <tr>
+    <th>住所</th>
+    <td>{{ object.address }}{{ object.street_address }}</td>
+  </tr>
+  <tr>
+    <th>メールアドレス</th>
+    <td>{{ object.email }}</td>
+  </tr>
+  <tr>
+    <th>電話番号</th>
+    <td>{{ object.telephone_number }}</td>
+  </tr>
+  <tr>
+    <th>銀行名</th>
+    {% if object.bank_name != None %}
+    <td>{{ object.bank_name }}</td>
+    {% else %}
+    <td></td>
+    {% endif %}
+  </tr>
+  <tr>
+    <th>支店番号</th>
+    {% if object.branch_name != None %}
+    <td>{{ object.branch_number }}</td>
+    {% else %}
+    <td></td>
+    {% endif %}
+  </tr>
+  <tr>
+    <th>口座番号</th>
+    {% if object.branch_name != None %}
+    <td>{{ object.bank_account_number }}</td>
+    {% else %}
+    <td></td>
+    {% endif %}
+  </tr>
+</table>
+    <form action="{% url 'user_app:detail' user_id=object.id %}" method="post">
+      {% csrf_token %}
   <fieldset>
 <legend>権限を変更してください</legend>
     <div>
@@ -34,7 +101,29 @@
 </form>
       {% endfor %}
   </table>
-  <p><a href="{% url 'user_app:list' %}">戻る</a></p>
-</body>
+  <p><a href="{% get_return_link request %}">戻る</a></p>
+  </article>
 
+            <aside>
+                <h3 class="sub-title">その他のページ</h3>
+                <ul class="sub-menu">
+                    <li><a href="{% url 'manager_app:list' %}">管理者情報一覧</a></li>
+                    <li><a href="{% url 'notification_app:list' %}">お知らせ情報一覧</a></li>
+                    <li><a href="{% url 'contact_app:list' %}">お問い合わせ情報一覧</a></li>
+                    <li><a href="{% url 'task_app:list' %}">依頼情報一覧</a></li>
+                </ul>
+
+		<h3 class="sub-title">あなたの所属グループ</h3>
+                <ul class="sub-menu">
+                {% for group in department_groups %}
+                <li><a>{{ group.name }}</a></li>
+                {% endfor %}
+                </ul>
+            </aside>
+        </div>
+        <footer>
+            <p><small>&copy; 2025 Mangosteen</small></p>
+        </footer>
+    </div>
+</body>
 </html>

@@ -4,29 +4,17 @@
 <head>
     <meta charset="utf-8">
     <title>ログイン</title>
-    <!-- スタイルシートのリンク -->
-    <link rel="stylesheet" href="{% static 'manager_app/styles.css' %}">
+    <link rel="stylesheet" href="/static-manager/common/css/common.css">
 </head>
 <body>
-    <div class="login-container">
-        <!-- ロゴとタイトル -->
-        <div class="logo">
-            <img src="{% static 'manager_app/img/flatsa_logo.png' %}" alt="ふらっとさロゴ">
-        </div>
-        <h2>管理者ログイン</h2>
-
-        <!-- ログインフォーム -->
-        <form action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-            {{ form.as_p }} <!-- フォームを<p>で囲む形で描画 -->
-            <p><input type="hidden" name="next" value="{{ next }}"></p>
-            <p><input type="submit" value="ログイン" class="btn"></p>
-        </form>
-
-        <!-- フッター -->
-        <footer>
-            <p>mangosteen</p>
-        </footer>
-    </div>
+    <header class="page-header wrapper">
+	    <h1><a href="{% url 'home_app:homepage' %}"><img class="logo" src="{% static 'common/img/logo.svg' %}" alt="ふらっとさ 管理者用ページ"></a></h1>
+    </header>
+    <form class="login-form" action="{% url 'login_app:login'%}" method="post">
+    {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="hidden" name="next" value="{{next}}"></p>
+        <p><input type="submit" value="ログイン"></p>
+    </form>
 </body>
 </html>

@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>管理者登録</h1>
-    <form action="{% url 'manager_app:create' %}" method="post">
+    <form action="{% url 'managerapp:create' %}" method="post">
       {% csrf_token %}
       {{ form.as_p }}
       <p><input type="submit" value="登録"></p>

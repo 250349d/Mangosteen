@@ -3,16 +3,36 @@
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>mypage</title>
+    <title>user's information</title>
+    <link rel="stylesheet" href="{% static 'common/css/common.css' %}">
 </head>
 <body>
-    <p><a href="/manager-info/">管理者情報一覧</a></p>
-    <p><a href="/group-info/">グループ情報一覧</a></p>
-    <p><a href="/notification-info/">お知らせ情報一覧</a></p>
-    <p><a href="/user-info/">ユーザー情報一覧</a></p>
-    <p><a href="/task-info/">依頼情報一覧</a></p>
-    <p><a href="/contact-info/">お問い合わせ情報一覧</a></p>
-    <p><a href="/login-app/logout/">ログアウト</a></p>
-</body>
+    <div id="list" class="big-bg">
+        <header class="page-header wrapper">
+		<h1><a href="{% url 'mypage_app:mypage' %}"><img class="logo" src="{% static 'common/img/logo.svg' %}" alt="ふらっとさ 管理者用ページ"></a></h1>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="{% url 'passchange_app:passchange' %}">パスワード変更</a></li>
+                    <li><a href="{% url 'login_app:logout' %}">ログアウト</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="mypage-button-container">
+            <p>
+                <a class="mypage-button" href="{% url 'manager_app:list' %}">管理者設定</a>
+                <a class="mypage-button" href="{% url 'user_app:list' %}">ユーザー管理</a>
+                <a class="mypage-button" href="{% url 'task_app:list' %}">注文管理</a>
+            </p>
+            <p>
+                <a class="mypage-button" href="{% url 'contact_app:list' %}">お問い合わせ確認</a>
+                <a class="mypage-button" href="{% url 'notification_app:list' %}">お知らせ送信・確認</a>
+                <a class="mypage-button" href="{% url 'group_app:list' %}">グループ管理</a>
+            </p>
+        </div>
 
+        <footer>
+            <p><small>&copy; 2025 Mangosteen</small></p>
+        </footer>
+    </div>
+</body>
 </html>

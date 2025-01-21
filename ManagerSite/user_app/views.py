@@ -30,7 +30,6 @@ def get_filtered_objects(expression):
 def get_filtered_objects_id(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            #cursor.execute("SELECT * FROM user_app_customuser WHERE id=%s", str(expression))
             cursor.execute("SELECT * FROM user_app_customuser WHERE id=%s", [str(expression)])
             results = namedtuplefetchall(cursor)
         except TypeError:
@@ -42,7 +41,6 @@ def get_filtered_objects_id(expression):
 def update_filtered_object_true(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            #cursor.execute("UPDATE user_app_customuser SET is_active = True WHERE id=%s", str(expression))
             cursor.execute("UPDATE user_app_customuser SET is_active = True WHERE id=%s", [str(expression)])
         except TypeError:
             print('TypeError')
@@ -50,7 +48,6 @@ def update_filtered_object_true(expression):
 def update_filtered_object_false(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            #cursor.execute("UPDATE user_app_customuser SET is_active = False WHERE id=%s", str(expression))
             cursor.execute("UPDATE user_app_customuser SET is_active = False WHERE id=%s", [str(expression)])
         except TypeError:
             print('TypeError')
@@ -58,46 +55,59 @@ def update_filtered_object_false(expression):
 def delete_object(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            #cursor.execute("SELECT * FROM client_app_task WHERE (client_id=%s OR worker_id=%s) AND status='a'", str(expression))
-            cursor.execute("SELECT * FROM client_app_task WHERE (client_id=%s OR worker_id=%s) AND status='a'", [str(expression)])
+            cursor.execute("SELECT * FROM client_app_task WHERE (client_id=%s OR worker_id=%s) AND status='0'", [str(expression), str(expression)])
             results = namedtuplefetchall(cursor)
         except TypeError:
             print('TypeError')
-            results = None
-    if len(results) != 0 or results == None:
-        return False
+            results = -1
+    if len(results) > 0 :
+        return "not exist user"
     with connections["user_data"].cursor() as cursor:
         try:
-            #cursor.execute("UPDATE client_app_task SET client_id = 1 WHERE client_id=%s", str(expression))
-            cursor.execute("UPDATE client_app_task SET client_id = 1 WHERE client_id=%s", [str(expression)])
-            #cursor.execute("UPDATE client_app_task SET worker_id = 1 WHERE worker_id=%s", str(expression))
-            cursor.execute("UPDATE client_app_task SET worker_id = 1 WHERE worker_id=%s", [str(expression)])
-            #cursor.execute("UPDATE send_contact_app SET user_id = 1 WHERE user_id=%s", str(expression))
-            cursor.execute("UPDATE send_contact_app SET user_id = 1 WHERE user_id=%s", [str(expression)])
-            #cursor.execute("DELETE FROM user_app_customuser WHERE id=%s", str(expression))
-            cursor.execute("DELETE FROM user_app_customuser WHERE id=%s", [str(expression)])
-            results = True
+            cursor.execute("SELECT * FROM client_app_task WHERE (client_id=%s OR worker_id=%s) AND status='0'", [str(expression), str(expression)])
+            results = namedtuplefetchall(cursor)
         except TypeError:
             print('TypeError')
-            results = False
-        return results
+            results = -1
+    if len(results) > 0 :
+        return "can't delete a user"
+    with connections["user_data"].cursor() as cursor:
+        """
+        update & delete
+        """
+        try:
+            cursor.execute("UPDATE client_app_task SET client_id = 1 WHERE client_id=%s", [str(expression)])
+            cursor.execute("UPDATE client_app_task SET worker_id = 1 WHERE worker_id=%s", [str(expression)])
+            cursor.execute("UPDATE send_contact_app_contact SET user_id = 1 WHERE user_id=%s", [str(expression)])
+            cursor.execute("DELETE FROM user_app_customuser WHERE id=%s", [str(expression)])
+        except TypeError:
+            print('TypeError')
+        return "deleted a user"
 
 @login_required
 def list_view(request):
+    manager = request.user
     if "q" in request.GET:
-        expression = request.GET['q']
-        objects = get_filtered_objects(expression)
-        if len(objects) < 1 or objects == None:
-            return redirect(to='/notfound/')
+        if request.GET['q'] == "":
+            objects = get_all_objects()
+        else:
+            expression = request.GET['q']
+            objects = get_filtered_objects(expression)
     else:
         objects = get_all_objects()
+
+    department_groups = manager.groups.all()
     params = {
+        'department_groups': department_groups,
         'objects': objects
     }
     return render(request, 'user_app/list.html', params)
 
 @login_required
 def detail_view(request, user_id):
+    objects = get_filtered_objects_id(user_id)
+    if objects == None or len(objects) < 1:
+        return redirect(to='/notfound/')
     if request.method == 'POST':
         data = request.POST
         if data.get("is_active") == 'True':
@@ -106,16 +116,15 @@ def detail_view(request, user_id):
             update_filtered_object_false(user_id)
         return redirect(to='/user-info/')
     else:
-        objects = get_filtered_objects_id(user_id)
-        if objects == None:
-            return redirect(to='/notfound/')
+        manager = request.user
+        department_groups = manager.groups.all()
         params = {
+            'department_groups': department_groups,
             'objects': objects
         }
         return render(request, 'user_app/detail.html', params)
 
 @login_required
 def delete_view(request, user_id):
-    if delete_object(user_id):
-        return redirect(to='/user-info/')
+    message = delete_object(user_id)
     return redirect(to='/user-info/')

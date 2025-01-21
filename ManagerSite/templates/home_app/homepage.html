@@ -3,10 +3,29 @@
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>mypage</title>
+    <title>homepage</title>
+    <link rel="stylesheet" href="{% static 'common/css/common.css' %}">
 </head>
 <body>
-    <p><a href="/login-app/login/">ログイン</a></p>
+    <div id="home" class="big-bg">
+        <header class="page-header wrapper">
+            <nav>
+                <ul class="main-nav">
+                </ul>
+            </nav>
+        </header>
+        <div class="home-content wrapper">
+            <img class="homepage-logo" src="{% static 'common/img/logo.svg' %}" alt="ふらっとさ 管理者用ページ">
+            <p>お買い物デリバリーサービス</p>
+            <a class="button" href="{% url 'login_app:login' %}">login</a>
+        </div>
+        <!--<footer>
+            <ul>
+                <li><a href="#">FaceBook</a></li>
+                <li><a href="#">Twitter</a></li>
+            </ul>
+            <p>Copyright 2019 Mana</p>
+        </footer>-->
+    </div>
 </body>
-
 </html>

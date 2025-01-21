@@ -20,5 +20,5 @@ from django.views.generic import TemplateView
 
 app_name = 'mypage_app'
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='mypage_app/mypage.html'))
+    path('', TemplateView.as_view(template_name='mypage_app/mypage.html'), name='mypage')
 ]

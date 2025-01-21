@@ -14,17 +14,21 @@ def list_view(request):
     入力：HttpRequest
     出力：htmlファイルのレンダ
     """
+    manager = request.user
+    department_groups = manager.groups.all()
     if "q" in request.GET:
-        expression = request.GET['q']
-        notifications = Notification.objects.filter(
-            title=expression
-        ).order_by('id')
-        if len(notifications) < 1 or notifications == None:
-            return redirect(to='/notfound/')
+        if request.GET['q'] == '':
+            notifications = Notification.objects.all().order_by('id')
+        else:
+            expression = request.GET['q']
+            notifications = Notification.objects.filter(
+                title=expression
+            ).order_by('id')
     else:
         notifications = Notification.objects.all().order_by('id')
     params = {
-        'notifications': notifications
+        'notifications': notifications,
+        'department_groups': department_groups
     }
     return render(request, 'notification_app/list.html', params)
 
@@ -35,6 +39,8 @@ def detail_view(request, notification_id):
     入力：HttpRequest，notification_id
     出力：情報編集フォームのレンダ
     """
+    manager = request.user
+    department_groups = manager.groups.all()
     notification = get_object_or_404(Notification, id=notification_id)
     if request.method == 'POST':
         form = NotificationForm(request.POST, instance=notification)
@@ -44,6 +50,7 @@ def detail_view(request, notification_id):
     else:
         form = NotificationForm(instance=notification)
         param = {
+            'department_groups': department_groups,
             'form': form,
             'notification': notification
         }
@@ -56,17 +63,19 @@ def create_view(request):
     入力：HttpRequest
     出力：情報入力フォームのレンダ
     """
+    manager = request.user
+    department_groups = manager.groups.all()
     if request.method == 'POST':
         form = NotificationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect(to="/notification-info/")
-    else:
-        form = NotificationForm()
-        param = {
-            'form': form
-        }
-        return render(request, 'notification_app/create.html', param)
+    form = NotificationForm()
+    param = {
+        'department_groups': department_groups,
+        'form': form
+    }
+    return render(request, 'notification_app/create.html', param)
     
 @login_required
 def delete_view(request, notification_id):

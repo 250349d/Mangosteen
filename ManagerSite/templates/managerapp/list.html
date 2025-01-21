@@ -31,25 +31,25 @@
 	<td>{{ manager.last_name }} {{manager.first_name}}</td>
         <td>{{ manager.email }}</td>
 	{% if manager.is_staff %}
-	<td align=center><img src="{% static 'manager_app/img/icon-yes.svg' %}"></td>
+	<td align=center><img src="{% static 'managerapp/img/icon-yes.svg' %}"></td>
 	{% else %}
-	<td align=center><img src="{% static 'manager_app/img/icon-no.svg' %}"></td>
+	<td align=center><img src="{% static 'managerapp/img/icon-no.svg' %}"></td>
 	{% endif %}
 	{% if manager.is_active %}
-	<td align=center><img src="{% static 'manager_app/img/icon-yes.svg' %}"></td>
+	<td align=center><img src="{% static 'managerapp/img/icon-yes.svg' %}"></td>
 	{% else %}
-	<td align=center><img src="{% static 'manager_app/img/icon-no.svg' %}"></td>
+	<td align=center><img src="{% static 'managerapp/img/icon-no.svg' %}"></td>
 	{% endif %}
 	<td>
-    <a href="{% url 'manager_app:detail' manager_id=manager.id %}">詳細</a>
-    <a href="{% url 'manager_app:delete' manager_id=manager.id %}">削除</a>
+    <a href="{% url 'managerapp:detail' manager_id=manager.id %}">詳細</a>
+    <a href="{% url 'managerapp:delete' manager_id=manager.id %}">削除</a>
     <a href="{% url 'group_app:choice' manager_id=manager.id %}">所属設定</a>
 	</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-    <p><a href="{% url 'manager_app:create' %}">新規管理者登録</a></p>
+    <p><a href="{% url 'managerapp:create' %}">新規管理者登録</a></p>
     <p><a href="/mypage/">戻る</a></p>
 </body>
 

@@ -4,45 +4,98 @@
 <head>
     <meta charset="utf-8">
     <title>ユーザー情報一覧</title>
+    <link rel="stylesheet" href="{% static 'common/css/common.css' %}">
 </head>
 <body>
-    <h1>ユーザー情報一覧</h1>
-  <form action="/user-info/">
-    <label for="site-search">Search the site:</label>
-    <input type="search" id="site-search" name="q" />
-    <button type="submit">Search</button>
-  </form>
-  <table>
-    <thead>
-      <tr>
-        <th>ユーザーID</th>
-        <th>氏名</th>
-        <th>メールアドレス</th>
-	<th>生年月日</th>
-	<th>活動権限</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for object in objects %}
-      <tr>
-        <th>{{ object.id }}</th>
-	<td>{{ object.last_name }} {{object.first_name}}</td>
-        <td>{{ object.email }}</td>
-	<td>{{ object.birthdate }}</td>
-	{% if object.is_active %}
-	<td align=center><img src="{% static 'user_app/img/icon-yes.svg' %}"></td>
-	{% else %}
-	<td align=center><img src="{% static 'user_app/img/icon-no.svg' %}"></td>
-	{% endif %}
-	<td>
-          <a href="{% url 'user_app:detail' user_id=object.id %}">詳細</a>
-          <a href="{% url 'user_app:delete' user_id=object.id %}">削除</a>
-	</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-    <p><a href="/mypage/">戻る</a></p>
-</body>
+    <div id="list" class="big-bg">
+        <header class="page-header wrapper">
+		<h1><a href="{% url 'mypage_app:mypage' %}"><img class="logo" src="{% static 'common/img/logo.svg' %}" alt="ふらっとさ 管理者用ページ"></a></h1>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="{% url 'passchange_app:passchange' %}">パスワード変更</a></li>
+		    <li><a href="{% url 'login_app:logout' %}">ログアウト</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="list-contents wrapper">
+            <article>
+                <header class="post-info">
+                    <h2 class="post-title">
+                        ユーザー情報一覧
+                    </h2>
+                </header>
+                <form class="search-box" action="/user-info/">
+                    <label for="site-search">Search the site:</label>
+                    <input type="search" id="site-search" name="q" />
+                    <button type="submit">Search</button>
+                </form>
+		<script>
+                    function ask(userId) {
+                	    if (confirm('このアカウントを削除しますか？')) {
+                	    	location.href = 'delete/'+ userId;
+                	    }
+                }
+                </script>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ユーザーID</th>
+                            <th>氏名</th>
+                            <th>メールアドレス</th>
+                            <th>生年月日</th>
+                            <th>活動権限</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for object in objects %}
+                        {% if object.last_name != "None" %}
+                            <tr>
+                                <td>{{ object.id }}</td>
+                                <td>{{ object.last_name }} {{object.first_name}}</td>
+                                <td>{{ object.email }}</td>
+                                <td>{{ object.birthdate }}</td>
+                                {% if object.is_active %}
+                                    <td align=center><img src="{% static 'user_app/img/icon-yes.svg' %}"></td>
+                                {% else %}
+                                    <td align=center><img src="{% static 'user_app/img/icon-no.svg' %}"></td>
+                                {% endif %}                                                     <td>
+                                <a href="{% url 'user_app:detail' user_id=object.id %}">詳細</a>
+				<!--<a href="{% url 'user_app:delete' user_id=object.id %}">削除</a>-->
+				<a onClick="ask({{ object.id }})">削除</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p class="back-button"><a href="/mypage/">戻る</a></p>
+            </article>
 
+            <aside>
+                <h3 class="sub-title">その他のページ</h3>
+                <ul class="sub-menu">
+			<li><a href="{% url 'manager_app:list' %}">管理者情報一覧</a></li>
+                    <li><a href="{% url 'notification_app:list' %}">お知らせ情報一覧</a></li>
+		    <li><a href="{% url 'contact_app:list' %}">お問い合わせ情報一覧</a></li>
+                    <li><a href="{% url 'task_app:list' %}">依頼情報一覧</a></li>
+                </ul>
+
+                <h3 class="sub-title">あなたの所属グループ</h3>
+                <ul class="sub-menu">
+		{% for group in department_groups %}
+		<li><a>{{ group.name }}</a></li>
+		{% endfor %}
+                </ul>
+            </aside>
+        </div>
+        <footer>
+            <!--<ul>
+                <li><a href="#">FaceBook</a></li>
+                <li><a href="#">Twitter</a></li>
+            </ul>-->
+            <p><small>&copy; 2025 Mangosteen</small></p>
+        </footer>
+    </div>
+</body>
 </html>

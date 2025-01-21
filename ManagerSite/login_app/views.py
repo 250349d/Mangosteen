@@ -12,12 +12,14 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
 
-            if user:
+            if user.is_staff:
                 login(request, user)
                 if next == 'None':
-                    return redirect(to='/mypage/')
+                    return redirect('mypage_app:mypage')
                 else:
                     return redirect(to=next)
+            else:
+                return redirect('forbidden') # Forbidden
     else:
         form = LoginForm()
         next = request.GET.get('next')
@@ -32,4 +34,4 @@ def login_view(request):
 def logout_view(request):
     logout(request)
 
-    return redirect(to='/homepage/')
+    return redirect('home_app:homepage')

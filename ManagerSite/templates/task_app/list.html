@@ -4,42 +4,113 @@
 <head>
     <meta charset="utf-8">
     <title>依頼情報一覧</title>
+    <link rel="stylesheet" href="{% static 'common/css/common.css' %}">
 </head>
 <body>
-    <h1>依頼情報一覧</h1>
-  <form action="/task-info/">
+    <div id="list" class="big-bg">
+        <header class="page-header wrapper">
+            <h1><a href="{% url 'mypage_app:mypage' %}"><img class="logo" src="{% static 'common/img/logo.svg' %}" alt="ふらっとさ 管理者用ページ"></a></h1>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="{% url 'passchange_app:passchange' %}">パスワード変更</a></li>
+                    <li><a href="{% url 'login_app:logout' %}">ログアウト</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="list-contents wrapper">
+            <article>
+                <header class="post-info">
+                    <h2 class="post-title">
+                        依頼情報一覧
+                    </h2>
+                </header>
+  <form class="search-box" action="/task-info/">
     <label for="site-search">Search the site:</label>
     <input type="search" id="site-search" name="q" />
 
     <button type="submit">Search</button>
   </form>
+  <script>
+    function ask(taskId) {
+            if (confirm('この依頼を削除しますか？')) {
+                location.href = 'delete/'+ taskId;
+            }
+      }
+  </script>
   <table>
     <thead>
       <tr>
         <th>依頼ID</th>
         <th>件名</th>
         <th>作成日時</th>
-        <th>配達期限</th>
+        <th>期限</th>
+	<th>進行度</th>
+	<th></th>
       </tr>
     </thead>
     <tbody>
       {% for object in objects %}
       <tr>
-        <th>{{ object.id }}</th>
+        <td>{{ object.id }}</td>
       	<td>{{ object.title }}</td>
         <td>{{ object.created_at }}</td>
         <td>{{ object.limit_of_time }}</td>
+        {% if object.status == '0' %}
+          <td>注文済み</td>
+        {% elif object.status == '1' %}
+          <td>配達中</td>
+        {% elif object.status == '2' %}
+          <td>承認待ち</td>
+        {% elif object.status == '3' %}
+          <td>再申請待ち</td>
+	{% elif object.status == '4' %} 
+          <td>配達完了</td>
+	{% elif object.status == 'C' %} 
+	  <td>キャンセル</td>
+        {% else %}
+	  <td>エラー</td>
+        {% endif %}
 	<td>
           <a href="{% url 'task_app:detail' task_id=object.id %}">詳細</a>
-          <a href="{% url 'user_app:detail' user_id=object.client_id %}">注文者詳細</a>
-          <a href="{% url 'user_app:detail' user_id=object.worker_id %}">配達員詳細</a>
-          <a href="{% url 'task_app:delete' task_id=object.id %}">削除</a>
+          {% if object.client_id == null %}
+            
+          {% else %}
+            <a href="{% url 'user_app:detail' user_id=object.client_id %}">依頼人情報詳細</a>
+	  {% endif %}
+          {% if object.worker_id == null %}
+            
+          {% else %}
+            <a href="{% url 'user_app:detail' user_id=object.worker_id %}">配達員情報詳細</a>
+	  {% endif %}
+          <a href="{% url 'transaction_app:detail' task_id=object.id %}">支払い情報確認</a>
+	  <a onClick="ask({{ object.id }})">削除</a>
 	</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-    <p><a href="/mypage/">戻る</a></p>
-</body>
+  <p class="back-button"><a href="/mypage/">戻る</a></p>
+            </article>
 
+            <aside>
+                <h3 class="sub-title">その他のページ</h3>
+                <ul class="sub-menu">
+                    <li><a href="{% url 'manager_app:list' %}">管理者情報一覧</a></li>
+		    <li><a href="{% url 'user_app:list' %}">ユーザ情報一覧</a></li>
+                    <li><a href="{% url 'notification_app:list' %}">お知らせ情報一覧</a></li>
+                    <li><a href="{% url 'contact_app:list' %}">お問い合わせ情報一覧</a></li>
+                </ul>
+
+                <h3 class="sub-title">あなたの所属グループ</h3>
+		<ul class="sub-menu">
+                    {% for group in department_groups %}
+                    <li><a>{{ group.name }}</a></li>
+                    {% endfor %}                                                </ul>
+            </aside>
+        </div>
+        <footer>
+            <p><small>&copy; 2025 Mangosteen</small></p>
+        </footer>
+    </div>
+</body>
 </html>

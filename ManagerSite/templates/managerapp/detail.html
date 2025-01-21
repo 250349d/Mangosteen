@@ -7,11 +7,11 @@
 </head>
 <body>
   <h1>管理者詳細情報</h1>
-  <form action="{% url 'manager_app:detail' manager_id=manager.id %}" method="POST">
+  <form action="{% url 'managerapp:detail' manager_id=manager.id %}" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     <p><input type="submit" value="保存"></p>
   </form>
-  <p><a href="{% url 'manager_app:list' %}">戻る</a></p>
+  <p><a href="{% url 'managerapp:list' %}">戻る</a></p>
 </body>
 </html>

@@ -18,18 +18,23 @@ def list_view(request):
     出力：htmlファイルのレンダ
     """
     if "q" in request.GET:
-        expression = request.GET['q']
-        managers = Manager.objects.filter(
-            Q(username=expression) |
-            Q(first_name=expression) |
-            Q(last_name=expression)
-        ).order_by('id')
-        if len(managers) < 1 or managers == None:
-            return redirect(to='/notfound/')
+        if request.GET['q'] == "":
+            managers = Manager.objects.all().order_by('id')
+        else:
+            expression = request.GET['q']
+            managers = Manager.objects.filter(
+                Q(username=expression) |
+                Q(first_name=expression) |
+                Q(last_name=expression) |
+                Q(email=expression)
+            ).order_by('id')
     else:
         managers = Manager.objects.all().order_by('id')
+    manager = request.user
+    department_groups = manager.groups.all()
     params = {
-        'managers': managers
+        'managers': managers,
+        'department_groups': department_groups
     }
     return render(request, 'manager_app/list.html', params)
 
@@ -42,17 +47,22 @@ def detail_view(request, manager_id):
     入力：HttpRequest，manager_id
     出力：情報変更フォームのレンダ
     """
+    manager = request.user
+    department_groups = manager.groups.all()
     manager = get_object_or_404(Manager, id=manager_id)
+    if manager.username == 'deleted':
+        return redirect(to='/notfound/')
     if request.method == 'POST':
         form = ManagerChangeForm(request.POST, instance=manager)
         if form.is_valid():
             user = form.save()
-            return redirect(to='/manager-info/')
+            return redirect('manager_app:list')
     else:
         form = ManagerChangeForm(instance=manager)
         param = {
             'form': form,
-            'manager': manager
+            'manager': manager,
+            'department_groups': department_groups
         }
         return render(request, 'manager_app/detail.html', param)
     
@@ -63,17 +73,19 @@ def create_view(request):
     入力：HttpRequest
     出力：情報登録フォームのレンダ
     """
+    manager = request.user
+    department_groups = manager.groups.all()
     if request.method == 'POST':
         form = ManagerCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(to="/manager-info/")
-    else:
-        form = ManagerCreationForm()
-        param = {
-            'form': form
-        }
-        return render(request, 'manager_app/create.html', param)
+            return redirect('manager_app:list')
+    form = ManagerCreationForm()
+    param = {
+        'form': form,
+        'department_groups': department_groups
+    }
+    return render(request, 'manager_app/create.html', param)
     
 @login_required
 def delete_view(request, manager_id):
@@ -82,6 +94,8 @@ def delete_view(request, manager_id):
     入力：HttpRequest，manager_id
     出力：/manager-info/へのリダイレクト
     """
+    if manager_id == 1:
+        return redirect(to='/notfound/')
     manager = get_object_or_404(Manager, id=manager_id)
     manager.delete()
-    return redirect(to='/manager-info/')
+    return redirect('manager_app:list')
