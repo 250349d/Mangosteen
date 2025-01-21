@@ -140,14 +140,19 @@ def submit_cost_view(request, pk):
 
 @login_required
 def cancel_request_view(request, pk):
+    """
+    依頼をキャンセルするビュー
+    配達中（1）の依頼のみキャンセル可能
+    キャンセル後は支払い完了（4）として扱う
+    """
     task = get_object_or_404(Task, pk=pk)
-    if task.status == '1' and task.worker == request.user: # 確認
+    if task.status == '1' and task.worker == request.user:  # 配達中の依頼のみキャンセル可能
         if request.method == 'POST':
-            task.status = 'C'  # Canceled
+            task.status = '4'  # 支払い完了として扱う
             task.worker = None  # 作業者をクリア
             task.save()
             return redirect('worker_app:mypage')  # マイページに戻る
-    return render(request, 'worker_app/cancel_request.html', {'task': task})
+    return render(request, 'cancel_request.html', {'request': task})
 
 @login_required
 def approve_cost_view(request, pk):
@@ -203,11 +208,12 @@ def approve_cost_view(request, pk):
 def accepted_requests_view(request):
     """
     受注済みの依頼を確認するビュー（一覧）
+    配達中（1）と申請済み（2）の依頼のみを表示
     """
     now = timezone.now()
     tasks = Task.objects.select_related('transaction').prefetch_related('order').filter(
         worker=request.user,
-        status__in=['1', '2', '3']  # Accepted, Waiting for Approval, Re-application
+        status__in=['1', '2']  # 配達中, 申請済み
     ).order_by('limit_of_time')
     
     # 各タスクの期限状態を確認
@@ -230,24 +236,42 @@ def accepted_requests_view(request):
 
 @login_required
 def completed_requests_view(request):
-    completed_tasks = Task.objects.filter(
+    """
+    完了した配達依頼を表示するビュー
+    支払い待ち（3）、支払い完了（4）の依頼を表示
+    キャンセル（C）は支払い完了（4）として扱う
+    """
+    completed_tasks = Task.objects.select_related('transaction').filter(
         worker=request.user,
-        status='4'  # Delivered
-    ).exclude(
-        status='C'  # Canceled
+        status__in=['3', '4', 'C']  # 支払い待ち, 支払い完了, キャンセル
     ).order_by('-delivery_completion_time')
+    
+    # キャンセルされた依頼のステータスを支払い完了として扱う
+    for task in completed_tasks:
+        if task.status == 'C':
+            task.status = '4'
     
     return render(request, 'worker_app/completed_requests.html', {'tasks': completed_tasks})
 
 @login_required
 def reward_check_view(request):
-    completed_tasks = Task.objects.filter(
+    """
+    報酬確認ビュー
+    支払い待ち（3）と支払い完了（4）の依頼を表示
+    """
+    completed_tasks = Task.objects.select_related('transaction', 'client').filter(
         worker=request.user,
-        status='4'  # Delivered
+        status__in=['3', '4']  # 支払い待ち, 支払い完了
     ).exclude(
-        status='C'  # Canceled
-    )
+        status='C'  # キャンセル
+    ).order_by('-delivery_completion_time')
     
+    # 各タスクの注文情報を取得
+    for task in completed_tasks:
+        task.orders = Order.objects.filter(task=task)
+        task.total_cost = sum(order.price * order.quantity for order in task.orders)
+    
+    # 合計報酬を計算
     total_reward = sum(task.transaction.courier_reward_amount for task in completed_tasks if hasattr(task, 'transaction'))
     completed_count = completed_tasks.count()
     
