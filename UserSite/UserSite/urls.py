@@ -1,5 +1,5 @@
 """
-URL configuration for UserSite project.
+URL configuration for MangTosa project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -16,17 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('homepage/', include("home_app.urls")),
+#    path('admin/', admin.site.urls),
+    path('forbidden/', TemplateView.as_view(template_name='403.html'), name='forbidden'),
+    path('cant-delete-user/', TemplateView.as_view(template_name='cant_delete_user.html'), name='cant_delete_user'),
+    
     path('notification-info/', include("notification_app.urls")),
     path('send-contact/', include("send_contact_app.urls")),
     path('signup/', include('signup_app.urls')),
     path('client/', include('client_app.urls')),
+    path('chat/', include('chat_app.urls')),
     path('userdelete/', include('userdelete_app.urls')),
     path('worker/', include('worker_app.urls')),
     path('passreset/', include('passreset_app.urls')),
     path('passchange/', include('passchange_app.urls')),
     path('login-app/', include('login_app.urls')),
+    path('edit-user-info/', include('edit_user_information_app.urls')),
+    path('', include("home_app.urls")),
 ]
