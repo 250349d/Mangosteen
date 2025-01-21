@@ -11,7 +11,7 @@ from django.http import HttpResponse
 def passchange_view(request):
     if request.user.is_authenticated:
         if request.method == "POST":
-            form = PasswordChangeForm(user = request.user, data = request.POST)
+            form = CpassForm(user = request.user, data = request.POST)
             if form.is_valid():
                 form.save()
                 update_session_auth_hash(request, form.user)

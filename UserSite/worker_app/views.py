@@ -77,7 +77,8 @@ def submit_cost_view(request, pk):
         Task,
         pk=pk,
         worker=request.user,
-        status__in=['1', '3']  # 配達中または再申請のタスク
+#        status__in=['1', '3']  # 配達中または再申請のタスク
+        status='1' # 
     )
 
     # 依頼者の住所を取得
@@ -93,8 +94,8 @@ def submit_cost_view(request, pk):
                 Request.objects.create(
                     task=task,
                     time=timezone.now(),
-                    price=task.transaction.total_cost,
-                    status='2'  # 承認待ち
+                    price=request.POST.get("cost"),
+                    status='0'  # 承認待ち
                 )
 
                 # タスクのステータスを更新

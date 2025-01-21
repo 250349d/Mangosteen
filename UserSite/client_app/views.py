@@ -129,7 +129,9 @@ def cancel_order(request, task_id):
 				error_message = "この注文は受注済みです"
 				raise Exception(error_message)
 
-			task.delete() # 注文を削除
+			#task.delete() # 注文を削除
+			task.status = "C"
+			task.save()
 
 			is_success = True
 		except Exception as e:
@@ -276,12 +278,12 @@ def reject_request(request):
 			order_request.full_clean()
 			order_request.save()
 
-			#非承認メールを送信
+			#非承認メールを配達員に送信
 			send_mail(
-				'【Flatosa】申請が非承認となりました',
+				'ふらっとさ：申請が非承認となりました',
 				'あなたの申請が非承認となりました。詳細はアプリをご確認ください。',
-				'from@example.com',
-				['to@exxample.com'],
+				'mangosteen1230@gmail.com',
+				[task.worker.email],
 			)
 
 			is_success = True
