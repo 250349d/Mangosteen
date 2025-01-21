@@ -92,8 +92,9 @@ def create_order(request):
 @login_required
 def check_order(request):
 	tasks = Task.objects.filter(
-		client=request.user, # 注文者がログインユーザー
-		transaction__payment_fee_date__isnull=True # 支払い済みでない
+		client = request.user, # 注文者がログインユーザー
+	).exclude(
+		status='4' # 支払い完了の注文を除外
 	)
 	return render(request, 'client_app/check_order.html', {'tasks': tasks})
 
@@ -129,9 +130,7 @@ def cancel_order(request, task_id):
 				error_message = "この注文は受注済みです"
 				raise Exception(error_message)
 
-			#task.delete() # 注文を削除
-			task.status = "C"
-			task.save()
+			task.delete() # 注文を削除
 
 			is_success = True
 		except Exception as e:
@@ -206,9 +205,10 @@ def accept_request(request):
 				error_message = "注文者がログインユーザーではありません"
 				raise Exception(error_message)
 
-			# 申請情報のステータスを承認に変更
-			order_request.status = '1'
+			order_request.status = '1' # 申請情報のステータスを承認に変更
 			order_request.save()
+
+			task.status = '3' # 注文ステータスを支払い待ちに変更
 
 			# 申請金額による取引情報の更新
 			summarize_financials(task, order_request.price)
@@ -278,6 +278,8 @@ def reject_request(request):
 			order_request.full_clean()
 			order_request.save()
 
+			task.status = '1' # 注文ステータスを配達中に変更
+
 			#非承認メールを配達員に送信
 			send_mail(
 				'ふらっとさ：申請が非承認となりました',
@@ -301,8 +303,8 @@ def reject_request(request):
 @login_required
 def check_completed_order(request):
 	tasks = Task.objects.filter(
-		client=request.user, # 注文者がログインユーザー
-		transaction__payment_fee_date__isnull=False # 支払い済み
+		client = request.user, # 注文者がログインユーザー
+		status = '4' # 支払い済み
 	)
 	return render(request, 'client_app/check_completed_order.html', {'tasks': tasks})
 
@@ -339,8 +341,7 @@ def check_payment(request):
 	else:
 		payment_tasks = Task.objects.filter(
 			client=request.user, # 注文者がログインユーザー
-			transaction__payment_fee_date__isnull=True, # 支払い済みでない
-			status='4' # 注文ステータスが完了済み
+			status='3' # 注文ステータスが支払い待ち
 		)
 		return render(request, 'client_app/check_payment.html', {'tasks': payment_tasks})
 
@@ -398,6 +399,8 @@ def payment(request, task_id):
 			transaction.payment_fee_date = timezone.now()
 			transaction.full_clean()
 			transaction.save()
+
+			task.status = '4' # 注文ステータスを支払い完了に変更
 
 			is_success = True
 		except Exception as e:

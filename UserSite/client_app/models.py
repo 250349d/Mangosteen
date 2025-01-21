@@ -53,7 +53,7 @@ class Task(models.Model):
 		max_length=1,
 		default="0",
 		verbose_name="配達ステータス",
-		help_text="0: 注文済み, 1: 配達中, 2: 承認待ち, 3: 再申請待ち, 4: 配達完了",
+		help_text="0: 注文済み, 1: 配達中, 2: 申請済み, 3: 支払い待ち, 4: 支払い完了",
 	)
 
 	delivery_completion_time = models.DateTimeField(
