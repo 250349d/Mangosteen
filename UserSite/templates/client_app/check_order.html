@@ -43,6 +43,8 @@
 						支払い待ち
 					{% elif task.status == '4' %}
 						支払い完了
+					{% elif task.status == 'C' %}
+						キャンセル済み
 					{% endif %}
 				</span>
 
