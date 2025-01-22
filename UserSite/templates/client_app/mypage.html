@@ -24,7 +24,8 @@
                     <img class="furattosalogo" src="{% static 'login_app/images/furattosalogo.png' %}"  width="246" height="82"> 
                     {% comment %} width="984" height="329" {% endcomment %}
                 </div>
-            <p class="my_passchange"><a href="/passchange/" >パスワード変更</a></p>
+		<p class="my_passchange"><a href="{% url 'edit_user_information_app:edit' %}" >ユーザー情報変更</a></p>
+            <p><a href="/passchange/" >パスワード変更</a></p>
             <p><a href="/send-contact/">お問い合わせ</a></p>
             <p><a href="/notification-info/">お知らせ情報一覧</a></p>
             <p><a href="/terms_of_use/">利用規約</a></p>
@@ -42,7 +43,7 @@
     <div class="mypage">
     <p><input type="submit" class="create_order" value="商品注文" onclick="location.href='{% url 'client_app:create-order' %}'"></p>
     <p><input type="submit" class="check_order" value="注文確認" onclick="location.href='{% url 'client_app:check-order' %}'"></p>
-    <p><input type="submit" class="check_completed" value="注文済み商品確認" onclick="location.href='{% url 'client_app:check-completed-order' %}'"></p>
+    <p><input type="submit" class="check_completed" value="完了済み商品確認" onclick="location.href='{% url 'client_app:check-completed-order' %}'"></p>
     <p><input type="submit" class="check_payment" value="お支払い" onclick="location.href='{% url 'client_app:check-payment' %}'"></p>
 
     </div>
