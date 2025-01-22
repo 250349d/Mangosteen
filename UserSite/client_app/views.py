@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from .models import Task, Transaction, Order, Request
 
@@ -94,7 +95,8 @@ def check_order(request):
 	tasks = Task.objects.filter(
 		client = request.user, # 注文者がログインユーザー
 	).exclude(
-		status='4' # 支払い完了の注文を除外
+		Q(status='4') | # 支払い完了の注文を除外
+        Q(status='C')
 	)
 	return render(request, 'client_app/check_order.html', {'tasks': tasks})
 

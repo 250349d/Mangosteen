@@ -15,8 +15,19 @@ def passreset_view(request):
         new_password = get_random_string(length=20)
         user.set_password(new_password)
         user.save()
+        text = 'new password :' + new_password + ';'
+#        return HttpResponse(text)
+        send_mail(
+            'パスワード再発行',
+            text,
+            'mangosteen1230@gmail.com',
+            [user.email],
+        )
         print(new_password)
         #sendmail()でメールを送信
-        return redirect(to="/login-app/login/")
+        return redirect("passreset_app:done")
     else:
         return render(request, "passreset_app/password_reset_request.html")
+
+def passreset_done_view(request):
+    return render(request, "passreset_app/password_reset_done.html")

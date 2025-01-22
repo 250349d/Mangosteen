@@ -22,7 +22,7 @@ def get_all_objects():
 def get_filtered_objects_id(expression):
     with connections["manager_data"].cursor() as cursor:
         try:
-            cursor.execute("SELECT * FROM notification_app_notification WHERE id=%s", str(expression))
+            cursor.execute("SELECT * FROM notification_app_notification WHERE id=%s", [str(expression)])
             results = namedtuplefetchall(cursor)
         except TypeError:
             print('TypeError')
@@ -41,7 +41,8 @@ def list_view(request):
 @login_required
 def detail_view(request, notification_id):
     objects = get_filtered_objects_id(notification_id)
-    if objects == None:
+    #return HttpResponse(objects)
+    if objects == None or len(objects) < 1:
         return redirect(to='/notfound/')
     params = {
         'objects': objects

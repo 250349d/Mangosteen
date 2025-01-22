@@ -17,7 +17,7 @@ def passchange_view(request):
                 update_session_auth_hash(request, form.user)
                 return redirect('client_app:mypage')
         else:
-            form = PasswordChangeForm(user = request.user)
+            form = CpassForm(user = request.user)
         param = {
             'form': form
         }

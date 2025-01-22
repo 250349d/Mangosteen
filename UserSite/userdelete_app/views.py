@@ -11,9 +11,9 @@ CustomUser = get_user_model()
 
 @login_required
 def userdelete_view(request):
+    user = get_object_or_404(CustomUser, id=request.user.id) # 対象ユーザの抽出
     if len(Task.objects.exclude(status="4").exclude(status="C").filter(client=request.user)) == 0 and len(Task.objects.exclude(status="4").exclude(status="C").filter(worker=request.user)) == 0:
         logout(request)
-        user = get_object_or_404(CustomUser, id=request.user.id) # 対象ユーザの抽出
         user.delete()
         return redirect('home_app:homepage')
     else:
