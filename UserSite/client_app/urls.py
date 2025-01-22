@@ -22,7 +22,7 @@ urlpatterns = [
 
 	# 完了済み依頼確認機能
 	path('check-completed-order/', views.check_completed_order, name='check-completed-order'),
-	path('check-completed-order/detail/<int:task_id>/', views.check_order_detail, name='check-completed-order-detail'),
+	path('check-completed-order/detail/<int:task_id>/', views.check_completed_order_detail, name='check-completed-order-detail'),
 
 	# 支払い機能
 	path('check-payment/', views.check_payment, name='check-payment'),

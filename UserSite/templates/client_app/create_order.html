@@ -4,9 +4,9 @@
 <html lang="ja">
 <head>
 	<meta charset="UTF-8">
-	<title>ふらっとさ</title>
-	 {% comment %} <link rel="stylesheet" href="{% static 'client_app/css/create_order.css' %}"> {% endcomment %}
-	<metaname="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ふらっとさ - 注文作成</title>
+	<link rel="stylesheet" href="{% static 'client_app/css/create_order.css' %}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{% static 'css/sample.css' %}" rel ="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
 	<script>
@@ -16,86 +16,87 @@
 	<script src="{% static 'client_app/js/create_order.js' %}"></script>
 </head>
 <body>
-	<div class="logo">
-        <img class="furattosalogo" src="{% static 'login_app/images/furattosalogo.png' %}"  width="246" height="82"> 
-    </div>
-	
-		<h1  class="c_create_order">注文作成</h1>
-		<div class="t_create_order">
-			<label for="title">件名</label>
-			<input type="text" id="title" name="title" required><br>
-		
-		<h2>注文詳細</h2>
-		</div>
-
-		<div class="order_table_wrap">
-			<div class="order_table">
-			<table>
-				<thead>
-					<tr>
-						{% comment %} <th>商品名</th>
-						<th>単価</th>
-						<th>個数</th>
-						<th>小計</th>
-						<th>備考</th> {% endcomment %}
-						<td>商品名</td>
-						<td>単価</td>
-						<td>個数</td>
-						<td>小計</td>
-						<td>備考</td>
-					</tr>
-				</thead>
-		
-				<tbody id="order-fields"></tbody>
-			</table>
-			</div>
+	<div class="container">
+		<div class="logo">
+			<img class="furattosalogo" src="{% static 'login_app/images/furattosalogo.png' %}" alt="ふらっとさロゴ">
 		</div>
 		
-
+		<div class="order-section">
+			<h1 class="section-title">注文作成</h1>
 			
-	
-		<div align="center">
-			<button type="button" class="create_table" onclick="addOrderField()">商品を追加</button><br>
-			<div class="total">
-			<label for="total-price">合計金額:</label>
-			<input id="total-price" type="number" min="0" value="0" readonly> 円<br>
+			<div class="order-form">
+				<div class="form-group">
+					<label for="title">件名</label>
+					<input type="text" id="title" name="title" required placeholder="注文の件名を入力してください">
+				</div>
+
+				<div class="order-details">
+					<h2 class="subsection-title">注文詳細</h2>
+					<div class="table-container">
+						<table class="order-table">
+							<thead>
+								<tr>
+									<th>商品名</th>
+									<th>単価</th>
+									<th>個数</th>
+									<th>小計</th>
+									<th>備考</th>
+								</tr>
+							</thead>
+							<tbody id="order-fields">
+							</tbody>
+						</table>
+					</div>
+
+					<button type="button" class="btn btn-add" onclick="addOrderField()">商品を追加</button>
+				</div>
+
+				<div class="order-summary">
+					<div class="form-group">
+						<label for="total-price">合計金額:</label>
+						<div class="price-container">
+							<input id="total-price" type="number" min="0" value="0" readonly>
+							<span class="currency">円</span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="limit-of-time">配達期限:</label>
+						<input type="datetime-local" id="limit-of-time" name="limit_of_time" required>
+					</div>
+				</div>
 			</div>
 
-			<div class="limit">
-			<label for="limit-of-time">配達期限:</label>
-			<input type="datetime-local" id="limit-of-time" name="limit_of_time" required><br>
+			<div class="shop-section">
+				<h2 class="subsection-title">店舗情報入力</h2>
+				<div class="shop-form">
+					<div class="form-group">
+						<label for="shop-name">店名</label>
+						<input type="text" id="shop-name" name="shop_name" required placeholder="店舗名を入力してください">
+					</div>
+
+					<div class="form-group">
+						<label for="shop-post-code">郵便番号</label>
+						<input type="text" id="shop-post-code" name="shop_post_code" placeholder="000-0000" required>
+					</div>
+
+					<div class="form-group">
+						<div class="address-prefix">高知県香美市土佐山田町</div>
+						<input type="text" id="shop-address" name="shop_address" placeholder="町域" required>
+					</div>
+
+					<div class="form-group">
+						<label for="shop-street-address">番地</label>
+						<input type="text" id="shop-street-address" name="shop_street_address" required placeholder="番地を入力してください">
+					</div>
+				</div>
+			</div>
+
+			<div class="button-group">
+				<button type="button" class="btn btn-secondary" onclick="history.back()">戻る</button>
+				<button type="button" class="btn btn-primary" onclick="submitOrder()">注文確定</button>
 			</div>
 		</div>
-
-	<br>
-
-	<form>
-	<div class="shop_info">
-		<h2>店舗情報入力</h2>
-
-		<div class="shop_name">
-			<label for="shop-name">店名</label>
-			<input type="text" id="shop-name" name="shop_name" required><br>
-		</div>
-
-		<div>
-			<label for="shop-post-code">郵便番号</label>
-			<input type="text" id="shop-post-code" name="shop_post_code" placeholder="000-0000" required><br>
-		</div>
-
-		<div>
-			<label for="shop-address">高知県香美市土佐山田町</label>
-			<input type="text" id="shop-address" name="shop_address" placeholder="町域" required><br>
-		</div>
-
-		<div>
-			<label for="shop-street-address">番地</label>
-			<input type="text" id="shop-street-address" name="shop_street_address" required><br>
-		</div>
-
-	<button type="button" class="order_confirmed" onclick="submitOrder()">注文確定</button>
-	<button type="button" class="return" onclick="history.back()">戻る</button>
 	</div>
-</form>
 </body>
 </html>

@@ -167,6 +167,16 @@ form .input_mail{
     font-size: 18px;
 }
 
+form .passreset-done{
+    color: #2495e0;
+    text-align: center;
+}
+
+form .input_mail-done{
+    margin-top:50px;  /* 必要な空白の大きさに調整 */
+    font-size: 18px;
+}
+
 form input[type="email"] {
     width:50%;
     margin-top:20px;  /* 必要な空白の大きさに調整 */

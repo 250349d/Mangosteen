@@ -310,6 +310,23 @@ def check_completed_order(request):
 	)
 	return render(request, 'client_app/check_completed_order.html', {'tasks': tasks})
 
+# 完了済み依頼詳細確認機能
+@login_required
+def check_completed_order_detail(request, task_id):
+	task = get_object_or_404(Task, pk=task_id)
+	# 注文者がログインユーザーでない場合はリダイレクト
+	if task.client != request.user:
+		return redirect('client_app:check-completed-order')
+
+	transaction = Transaction.objects.get(task=task)
+	# 支払い合計金額を計算
+	transaction.payment_total = transaction.total_cost + transaction.delivery_fee
+	orders = Order.objects.filter(task=task)
+	# 小計を計算
+	for order in orders:
+		order.subtotal = order.price * order.quantity
+	return render(request, 'client_app/completed_order_detail.html', {'task': task, 'transaction': transaction, 'orders': orders})
+
 
 # 支払い金額確認機能
 @login_required
@@ -335,8 +352,8 @@ def check_payment(request):
 		finally:
 			return JsonResponse({
 				'success': is_success,
+				'payment_total': transaction.total_cost + transaction.delivery_fee,
 				'total_cost': transaction.total_cost,
-				'product_cost': transaction.total_cost - transaction.delivery_fee,
 				'delivery_fee': transaction.delivery_fee,
 				'error_message': error_message
 			})
@@ -361,6 +378,11 @@ def payment(request, task_id):
 			# 注文者がログインユーザーでない場合はエラー処理
 			if task.client != request.user:
 				error_message = "注文者がログインユーザーではありません"
+				raise Exception(error_message)
+
+			# 支払い済みの場合はリダイレクト
+			if task.status == '4':
+				error_message = "既に支払い済みです"
 				raise Exception(error_message)
 
 			name = data.get('name')
@@ -415,6 +437,9 @@ def payment(request, task_id):
 		task = get_object_or_404(Task, pk=task_id)
 		# 注文者がログインユーザーでない場合はリダイレクト
 		if task.client != request.user:
-			return redirect('client_app:check-order')
-		total_cost = task.transaction.total_cost or 0
+			return redirect('client_app:check-payment')
+		# 支払い済みの場合はリダイレクト
+		if task.status == '4':
+			return redirect('client_app:check-payment')
+		total_cost = task.transaction.total_cost + task.transaction.delivery_fee
 		return render(request, 'client_app/payment.html', {'task_id': task_id, 'total_cost': total_cost})

@@ -1,6 +1,7 @@
 body {
-	margin: 0;
+	font-family: YuGothic,'Yu Gothic','ヒラギノ角ゴシック','Hiragino Sans',sans-serif;
 	font-weight: bold;
+	margin: 0;
 }
 
 /* チャット画面全体 */
@@ -14,21 +15,22 @@ body {
 }
 
 .back-button {
+	font-family: monospace;
 	text-decoration: none;
 	color: inherit;
 	margin: 0 2vh;
 }
 
 .chat-container {
-	height: 92%;
+	height: 94%;
 }
 
 /* メッセージ表示エリア */
 .message-container {
 	height: 90%;
-	font-size: 1.4vh;
+	font-size: 1.6vh;
 	overflow-y: scroll;
-	background-color: whitesmoke;
+	background-color:aliceblue;
 }
 
 /* メッセージ */
@@ -36,7 +38,7 @@ body {
 	display: flex;
 	align-items: flex-end;
 	flex-direction: row;
-	margin: 2vh;
+	margin: 1vh;
 	text-align: left;
 }
 
@@ -46,6 +48,8 @@ body {
 
 .left-message .message-text {
 	order: 1;
+	background-color: white;
+	color:rgb(133, 162, 215);
 }
 
 .right-message {
@@ -56,19 +60,22 @@ body {
 	text-align: right;
 }
 
+.right-message .message-text {
+	background-color: rgb(127, 202, 242);
+	color: white;
+}
+
 .message-info {
 	color:dimgray;
 	font-size: 1em;
-	margin: 0 1vw;
+	margin: 0 1vh;
 }
 
 .message-text {
-	background-color: lightgreen;
-	border-radius: 2.4vh;
+	border-radius: 2vh;
 	max-width: 60vw;
 	width: fit-content;
-	padding: 1vh;
-	color: black;
+	padding: 0.6vh 2vh;
 	font-size: 1.6em;
 	line-break: anywhere;
 }
@@ -88,12 +95,11 @@ body {
 /* メッセージ入力エリア */
 .message-input-container {
 	height: 10%;
-	padding: 1vh 1vw;
+	display: flex;
 }
 
 /* メッセージ入力 */
 .message-input {
-	margin: 0;
 	width: 90%;
 	height: 100%;
 	color: black;
@@ -101,8 +107,8 @@ body {
 	vertical-align: top;
 	resize: none;
 	padding: 1vw;
-	border-radius: 1vw;
 	line-break: anywhere;
+	border: none;
 }
 
 .message-input::placeholder {
@@ -111,11 +117,9 @@ body {
 
 /* 送信ボタン */
 .message-send-button {
-	vertical-align: top;
 	color:coral;
 	background-color: inherit;
-	max-width: 8%;
-	width: 6vh;
+	width: 10%;
 	aspect-ratio: 1;
 	font-size: 2.4vh;
 	border: 0.4vh solid coral;

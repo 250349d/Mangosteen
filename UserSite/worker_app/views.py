@@ -148,11 +148,11 @@ def cancel_request_view(request, pk):
     task = get_object_or_404(Task, pk=pk)
     if task.status == '1' and task.worker == request.user:  # 配達中の依頼のみキャンセル可能
         if request.method == 'POST':
-            task.status = '4'  # 支払い完了として扱う
+            task.status = 'C'  # 支払い完了として扱う
             task.worker = None  # 作業者をクリア
             task.save()
             return redirect('worker_app:mypage')  # マイページに戻る
-    return render(request, 'cancel_request.html', {'request': task})
+    return render(request, 'worker_app/cancel_request.html', {'task': task})
 
 @login_required
 def approve_cost_view(request, pk):

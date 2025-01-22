@@ -38,15 +38,15 @@
 					{% elif task.status == '1' %}
 						配達中
 					{% elif task.status == '2' %}
-						承認待ち
+						申請済み
 					{% elif task.status == '3' %}
-						再申請待ち
+						支払い待ち
 					{% elif task.status == '4' %}
-						配達完了
+						支払い完了
 					{% endif %}
 				</span>
 
-				<input type="submit" class="order_chat" value="チャット" onclick="location.href='{% url 'login_app:login' %}'">
+				<input type="submit" class="order_chat" value="チャット" onclick="location.href='{% url 'chat_app:chat' task_id=task.id %}'">
 
 				<br>
 

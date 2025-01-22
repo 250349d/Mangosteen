@@ -18,11 +18,13 @@ function showCost(taskId) {
 	})
 	.then(data => {
 		if (data.success) {
-			totalCostStr = "合計金額:" + data.total_cost;
-			productCostStr = "商品代金" + data.product_cost;
+			totalCostStr = "合計金額:" + data.payment_total;
+			productCostStr = "商品代金" + data.total_cost;
 			deliveryFeeStr = "手数料" + data.delivery_fee;
 			if (confirm(totalCostStr + "\n" + productCostStr + "\n" + deliveryFeeStr)) {
-				window.location.href = `${paymentUrl}${taskId}/`;
+				if (confirm("支払い画面に移ります\nよろしいですか？")) {
+					window.location.href = `${paymentUrl}${taskId}/`;
+				}
 			}
 		} else {
 			alert(data.error_message);

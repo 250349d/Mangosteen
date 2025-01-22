@@ -89,7 +89,8 @@ function acceptRequest(requestId) {
 	})
 	.then(data => {
 		if (data.success) {
-			alert("承認しました")
+			alert("承認しました\nお支払いをお願いします")
+			window.location.reload();
 		} else {
 			alert(data.error_message);
 		}

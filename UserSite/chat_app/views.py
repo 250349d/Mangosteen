@@ -30,6 +30,10 @@ def show_chat(request, task_id):
 		# ログインユーザーが注文者でも配達員でもない場合は404エラー
 		return HttpResponse(status=404)
 
+	# Taskのステータスが支払い完了の場合はリダイレクト
+	if task.status == '4':
+		return redirect('client_app:mypage')
+
 	return render(request, 'chat_app/chat.html', {
 		'event_stream_url': reverse('chat_app:event-stream', args=(task_id,)),
 		'update_message_url': reverse('chat_app:update-message'),
