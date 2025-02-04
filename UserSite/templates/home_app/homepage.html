@@ -1,0 +1,192 @@
+{% load static %}
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/sample.css' %}" rel="stylesheet">
+    <title>homepage</title>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border-radius: 5px;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo_home">
+        <img class="furattosalogo_home" src="{% static 'login_app/images/furattosalogo.png' %}" width="246" height="82">
+        <p><input type="submit" class="home_login" value="ログイン" onclick="location.href='{% url 'login_app:login' %}'"></p>
+        <p><input type="submit" class="home_signup" value="新規会員登録" onclick="location.href='{% url 'signup_app:signup' %}'"></p>
+        <button class="home_terms_of_use" type="button" onclick="openTermsModal()">利用規約</button>
+	<button class="home_about_site" type="button" onclick="openATSModal()">このサイトについて</button>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeTermsModal()">&times;</span>
+            <h1>利用規約</h1>
+            <div class="terms-content">
+                <h2>1. はじめに</h2>
+                <p>この利用規約（以下「本規約」）は、当サービス（以下「本サービス」）の利用条件を定めるものです。ユーザーの皆様には、本規約に従って本サービスをご利用いただきます。</p>
+
+                <h2>2. 定義</h2>
+                <p>本規約において使用する用語の定義は以下の通りとします：</p>
+                <ul>
+                    <li>「ユーザー」とは、本サービスを利用する全ての方を指します。</li>
+                    <li>「コンテンツ」とは、本サービス上で提供される全ての情報、テキスト、画像等を指します。</li>
+                </ul>
+
+                <h2>3. 利用登録</h2>
+                <p>本サービスの利用を希望する方は、本規約に同意の上、所定の方法により利用登録を行う必要があります。</p>
+
+                <h2>4. 禁止事項</h2>
+                <p>ユーザーは、本サービスの利用にあたり、以下の行為を行ってはなりません：</p>
+                <ul>
+                    <li>法令または公序良俗に違反する行為</li>
+                    <li>犯罪行為に関連する行為</li>
+                    <li>本サービスの運営を妨害する行為</li>
+                    <li>他のユーザーに迷惑をかける行為</li>
+                    <li>他人の個人情報等を収集または蓄積する行為</li>
+                    <li>不正アクセスをする行為</li>
+                </ul>
+
+                <h2>5. サービスの変更・停止</h2>
+                <p>当社は、以下の場合には、本サービスの全部または一部の提供を停止または中断することができるものとします：</p>
+                <ul>
+                    <li>システムの保守点検または更新を行う場合</li>
+                    <li>地震、落雷、火災、停電、天災などの不可抗力により、本サービスの提供が困難となった場合</li>
+                    <li>その他、当社が停止または中断を必要と判断した場合</li>
+                </ul>
+
+                <h2>6. 免責事項</h2>
+                <p>当社は、本サービスに関して、ユーザーに生じたいかなる損害についても、一切の責任を負わないものとします。</p>
+
+                <h2>7. 規約の変更</h2>
+                <p>当社は、必要と判断した場合には、ユーザーに通知することなく本規約を変更することができるものとします。</p>
+
+                <h2>8. 準拠法・裁判管轄</h2>
+                <p>本規約の解釈にあたっては、日本法を準拠法とします。本サービスに関して紛争が生じた場合には、当社の本店所在地を管轄する裁判所を専属的合意管轄とします。</p>
+
+                <p class="mt-4">制定日：2025年1月21日</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="atsModal" class="modal">
+	    <div class="modal-content">
+		    <span class="close-button" onclick="closeATSModal()">&times;</span>
+		    <h1>このサイトについて</h1>
+		    <div class="terms-content">
+			    <h2>1. はじめに</h2>
+			    <p>当サイトは香美市の運営するお買い物デリバリーサービス「ふらっとさ」の公式ウェブサイトです。</p>
+			    <h2>2. 「ふらっとさ」とは？</h2>
+			    <p>ふらっとさはお買い物に行けない、行きたくない方のためのデリバリーサービスです。会員登録をするだけでりようできます。また、簡単に配達員として働けるため、空いた時間にお金を稼ぐこともできます。</p>
+			    <h2>3．はじめてお使いの方へ</h2>
+			    <p>当サービスをご利用いただく場合、まずは会員登録をお済ませください。注文者として利用する方はそのまま「依頼をする」へお進みください。配達員として働きたい方は右上の「配達員ページ」から配達員ページへお進みください。</p>
+			    <p>推奨環境</p>
+			    <p></p>
+			    <p>当サイトは以下の環境でご覧いただくことを推奨しています。</p>
+			    <p></p>
+		            <p>スマートフォン</p>
+			    <ul>
+				    <li>Android</li>
+				    <li>iOS</li>
+				   </ul>
+				   
+		            <p>iPad</p>
+			    <ul>
+				    <li>iPadOS</li>
+			    </ul>
+			    <p class="mt-4">株式会社マンゴスチン</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // モーダルを開く
+        function openTermsModal() {
+            document.getElementById('termsModal').style.display = 'block';
+            // スクロールを無効にする
+            document.body.style.overflow = 'hidden';
+        }
+
+        // モーダルを閉じる
+        function closeTermsModal() {
+            document.getElementById('termsModal').style.display = 'none';
+            // スクロールを有効に戻す
+            document.body.style.overflow = 'auto';
+        }
+
+        // モーダルの外側をクリックした時にも閉じる
+        window.onclick = function(event) {
+            var modal = document.getElementById('termsModal');
+            if (event.target == modal) {
+                closeTermsModal();
+            }
+        }
+
+        // ESCキーでモーダルを閉じる
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeTermsModal();
+            }
+        });
+	// モーダルを開く
+        function openATSModal() {
+            document.getElementById('atsModal').style.display = 'block';
+            // スクロールを無効にする
+            document.body.style.overflow = 'hidden';
+        }
+
+        // モーダルを閉じる
+        function closeATSModal() {
+            document.getElementById('atsModal').style.display = 'none';
+            // スクロールを有効に戻す
+            document.body.style.overflow = 'auto';
+        }
+
+        // モーダルの外側をクリックした時にも閉じる
+        window.onclick = function(event) {
+            var modal = document.getElementById('atsModal');
+            if (event.target == modal) {
+                closeATSModal();
+            }
+        }
+
+    </script>
+</body>
+</html>

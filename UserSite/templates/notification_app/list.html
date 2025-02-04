@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}お知らせ一覧{% endblock %}
+
+{% block content %}
+{% load static %}
+<link href="{% static 'css/sample.css' %}" rel="stylesheet">
+
+<div class="logo">
+    <img class="furattosalogo" src="{% static 'login_app/images/furattosalogo.png' %}">
+</div>
+
+<form>
+    <h2>お知らせ情報一覧</h2>
+    {% if objects %}
+        <table>
+            <thead>
+                <tr>
+                    <th>件名</th>
+                    <th>送信日時</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in objects %}
+                <tr>
+                    <td>{{ object.title }}</td>
+                    <td>{{ object.created_at|date:"Y年m月d日 H:i" }}</td>
+                    <td>
+                        <a href="{% url 'notification_app:detail' notification_id=object.id %}" class="detail-link">詳細</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="no-data">現在お知らせはありません。</p>
+    {% endif %}
+    
+    <div class="button-container">
+	    <a href="{% url 'client_app:mypage' %}" class="back-button">前のページに戻る</a>
+    </div>
+</form>
+{% endblock %}
