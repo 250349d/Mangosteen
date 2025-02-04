@@ -1,5 +1,5 @@
 """
-WSGI config for MangTosa project.
+WSGI config for UserSite project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -12,8 +12,8 @@ import sys
 
 from django.core.wsgi import get_wsgi_application
 
-sys.path.append('/home/ubuntu/django_project/MangTosa')
+sys.path.append('/home/ubuntu/django_project/UserSite')
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'MangTosa.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'UserSite.settings')
 
 application = get_wsgi_application()
