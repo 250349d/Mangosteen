@@ -1,0 +1,56 @@
+{% load static %}
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>管理者情報一覧</title>
+</head>
+<body>
+    <h1>管理者情報一覧</h1>
+  <form action="/manager-info/">
+    <label for="site-search">Search the site:</label>
+    <input type="search" id="site-search" name="q" />
+    <button type="submit">Search</button>
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>管理者識別ID</th>
+        <th>氏名</th>
+        <th>メールアドレス</th>
+        <th>スタッフ権限</th>
+      	<th>活動権限</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for manager in managers %}
+      <tr>
+        <th>{{ manager.id }}</th>
+        <td>{{ manager.username }}</td>
+	<td>{{ manager.last_name }} {{manager.first_name}}</td>
+        <td>{{ manager.email }}</td>
+	{% if manager.is_staff %}
+	<td align=center><img src="{% static 'managerapp/img/icon-yes.svg' %}"></td>
+	{% else %}
+	<td align=center><img src="{% static 'managerapp/img/icon-no.svg' %}"></td>
+	{% endif %}
+	{% if manager.is_active %}
+	<td align=center><img src="{% static 'managerapp/img/icon-yes.svg' %}"></td>
+	{% else %}
+	<td align=center><img src="{% static 'managerapp/img/icon-no.svg' %}"></td>
+	{% endif %}
+	<td>
+    <a href="{% url 'managerapp:detail' manager_id=manager.id %}">詳細</a>
+    <a href="{% url 'managerapp:delete' manager_id=manager.id %}">削除</a>
+    <a href="{% url 'group_app:choice' manager_id=manager.id %}">所属設定</a>
+	</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+    <p><a href="{% url 'managerapp:create' %}">新規管理者登録</a></p>
+    <p><a href="/mypage/">戻る</a></p>
+</body>
+
+</html>
