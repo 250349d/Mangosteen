@@ -38,7 +38,7 @@
     {% endif %}
     
     <div class="button-container">
-        <a href="javascript:history.back()" class="back-button">前のページに戻る</a>
+	    <a href="{% url 'client_app:mypage' %}" class="back-button">前のページに戻る</a>
     </div>
 </form>
 {% endblock %}

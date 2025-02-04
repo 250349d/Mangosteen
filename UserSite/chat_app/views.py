@@ -75,13 +75,11 @@ def stream_events(task, user_role, request):
 	# チャット情報のキューの初期化
 	chat_queue = queue.Queue()
 
-	# アクセス時に既存のチャットをキューに追加
-	chats = Chat.objects.filter(task=task).order_by('id')
-	for chat in chats:
-		chat_queue.put({
-			'chat': chat,
-			'type': 'create', # 既存のチャットは新規作成として扱う
-		})
+	# アクセス時に表示しているチャットを初期化
+	chat_queue.put({
+		'chat': None,
+		'type': 'delete',
+	})
 
 	# Chatテーブルが作成、更新されたときにキューに追加
 	@receiver(post_save, sender=Chat)
@@ -141,11 +139,12 @@ def stream_events(task, user_role, request):
 		chat = queue_data['chat']
 		type = queue_data['type']
 
-		data = None
+		data = {}
 		# チャットが作成か更新された場合はチャット情報を返す
 		if type == 'create' or type == 'update':
 			data = format_chat(chat)
 			data['type'] = type
+
 		# チャットが削除された場合はhtmlをすべて削除してチャット情報を再送信
 		elif type == 'delete':
 			# 全チャット情報をキューに追加
@@ -214,6 +213,8 @@ def send_message(request):
 			task_id = data.get('task_id')
 			text = data.get('message')
 
+			text = text.strip() # メッセージのフォーマット
+
 			task = Task.objects.get(id=task_id)
 			sender_group = None
 			if request.user == task.client:
@@ -225,6 +226,10 @@ def send_message(request):
 			else:
 				# ログインユーザーが注文者でも配達員でもない場合はエラー処理
 				raise Exception('ユーザーが注文者でも配達員でもありません')
+
+			# メッセージが空または空白のみの場合はエラー処理
+			if not text:
+				raise Exception('メッセージが空です')
 
 			Chat.objects.create(
 				task = task,

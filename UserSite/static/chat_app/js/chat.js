@@ -162,6 +162,10 @@ function sendMessage() {
 		return; // メッセージが空の場合は送信しない
 	}
 
+	// メッセージ送信ボタンを無効化
+	const sendButton = document.getElementById('sendButton');
+	sendButton.disabled = true;
+
 	const csrftoken = Cookies.get('csrftoken');
 
 	// メッセージ送信処理
@@ -192,5 +196,9 @@ function sendMessage() {
 	})
 	.catch(error => {
 		console.error("There was a problem with the fetch operation:", error);
+	})
+	.finally(() => {
+		// メッセージ送信ボタンを有効化
+		sendButton.disabled = false;
 	});
 }

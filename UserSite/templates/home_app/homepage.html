@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{% static 'css/sample.css' %}" rel="stylesheet">
-    <title>mypage</title>
+    <title>homepage</title>
     <style>
         .modal {
             display: none;
@@ -49,7 +49,7 @@
         <p><input type="submit" class="home_login" value="ログイン" onclick="location.href='{% url 'login_app:login' %}'"></p>
         <p><input type="submit" class="home_signup" value="新規会員登録" onclick="location.href='{% url 'signup_app:signup' %}'"></p>
         <button class="home_terms_of_use" type="button" onclick="openTermsModal()">利用規約</button>
-        <button class="home_about_site" type="button">このサイトについて</button>
+	<button class="home_about_site" type="button" onclick="openATSModal()">このサイトについて</button>
     </div>
 
     <!-- Terms Modal -->
@@ -104,6 +104,38 @@
         </div>
     </div>
 
+    <!-- Terms Modal -->
+    <div id="atsModal" class="modal">
+	    <div class="modal-content">
+		    <span class="close-button" onclick="closeATSModal()">&times;</span>
+		    <h1>このサイトについて</h1>
+		    <div class="terms-content">
+			    <h2>1. はじめに</h2>
+			    <p>当サイトは香美市の運営するお買い物デリバリーサービス「ふらっとさ」の公式ウェブサイトです。</p>
+			    <h2>2. 「ふらっとさ」とは？</h2>
+			    <p>ふらっとさはお買い物に行けない、行きたくない方のためのデリバリーサービスです。会員登録をするだけでりようできます。また、簡単に配達員として働けるため、空いた時間にお金を稼ぐこともできます。</p>
+			    <h2>3．はじめてお使いの方へ</h2>
+			    <p>当サービスをご利用いただく場合、まずは会員登録をお済ませください。注文者として利用する方はそのまま「依頼をする」へお進みください。配達員として働きたい方は右上の「配達員ページ」から配達員ページへお進みください。</p>
+			    <p>推奨環境</p>
+			    <p></p>
+			    <p>当サイトは以下の環境でご覧いただくことを推奨しています。</p>
+			    <p></p>
+		            <p>スマートフォン</p>
+			    <ul>
+				    <li>Android</li>
+				    <li>iOS</li>
+				   </ul>
+				   
+		            <p>iPad</p>
+			    <ul>
+				    <li>iPadOS</li>
+			    </ul>
+			    <p class="mt-4">株式会社マンゴスチン</p>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         // モーダルを開く
         function openTermsModal() {
@@ -133,6 +165,28 @@
                 closeTermsModal();
             }
         });
+	// モーダルを開く
+        function openATSModal() {
+            document.getElementById('atsModal').style.display = 'block';
+            // スクロールを無効にする
+            document.body.style.overflow = 'hidden';
+        }
+
+        // モーダルを閉じる
+        function closeATSModal() {
+            document.getElementById('atsModal').style.display = 'none';
+            // スクロールを有効に戻す
+            document.body.style.overflow = 'auto';
+        }
+
+        // モーダルの外側をクリックした時にも閉じる
+        window.onclick = function(event) {
+            var modal = document.getElementById('atsModal');
+            if (event.target == modal) {
+                closeATSModal();
+            }
+        }
+
     </script>
 </body>
 </html>

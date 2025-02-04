@@ -109,17 +109,17 @@ class Transaction(models.Model):
 		related_name='transaction',  # Taskモデルから関連するTransactionsをアクセスするための名前
 		verbose_name="関連するタスク"
 	)
-	total_cost = models.IntegerField(
+	total_cost = models.PositiveIntegerField(
 		blank=True,
 		null=True,
 		verbose_name="商品合計金額"
 	)
-	courier_reward_amount = models.IntegerField(
+	courier_reward_amount = models.PositiveIntegerField(
 		blank=True,
 		null=True,
 		verbose_name="給料"
 	)
-	delivery_fee = models.IntegerField(
+	delivery_fee = models.PositiveIntegerField(
 		blank=True,
 		null=True,
 		verbose_name="配達手数料"
@@ -170,10 +170,10 @@ class Order(models.Model):
 		max_length=150,
 		verbose_name="商品名"
 	)
-	price = models.IntegerField(
+	price = models.PositiveIntegerField(
 		verbose_name="単価"
 	)
-	quantity = models.IntegerField(
+	quantity = models.PositiveIntegerField(
 		verbose_name="個数"
 	)
 	notes = models.CharField(
@@ -196,7 +196,7 @@ class Request(models.Model):
 		auto_now_add=True,
 		verbose_name="申請時間"
 	)
-	price = models.IntegerField(
+	price = models.PositiveIntegerField(
 		verbose_name="申請金額"
 	)
 	status = models.CharField(

@@ -100,7 +100,7 @@ body {
 
 /* メッセージ入力 */
 .message-input {
-	width: 90%;
+	width: 80%;
 	height: 100%;
 	color: black;
 	text-align: left;
@@ -109,22 +109,27 @@ body {
 	padding: 1vw;
 	line-break: anywhere;
 	border: none;
+	font-size: 1.8vh;
 }
 
 .message-input::placeholder {
-	font-size: 1em;
+	font-size: 1.8vh;
 }
 
 /* 送信ボタン */
 .message-send-button {
 	color:coral;
 	background-color: inherit;
-	width: 10%;
+	width: 20%;
 	aspect-ratio: 1;
 	font-size: 2.4vh;
 	border: 0.4vh solid coral;
 	border-radius: 2vh;
 	padding: 0;
+}
+
+.message-send-button:disabled {
+	opacity: 0.4;
 }
 
 .message-send-button:hover {

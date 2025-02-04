@@ -12,13 +12,21 @@
     <img class="furattosalogo" src="{% static 'login_app/images/furattosalogo.png' %}"  width="246" height="82"> 
 </div>
 <form>
-    <h2>お知らせ詳細情報</h2>
-      {% for object in objects %}
-      {{ object.title }}
-      {{ object.text }}
-      {{ object.created_at }}
-      {% endfor %}
+    <table>
+        <h2>お知らせ詳細情報</h2>
+        {% for object in objects %}
+        <div class="notification-item">
+          <label>件名:</label>
+          <span>{{ object.title }}</span>
+        </div>
+        <div class="notification-item">
+          <label>掲載期限:</label>
+          <span>{{ object.created_at }}</span>
   </table>
+  <textarea readonly class="notification_text">
+    {{ object.text }}
+  </textarea>
+  {% endfor %}
   <p><a href="{% url 'notification_app:list' %}">戻る</a></p>
 </form>
 </body>
