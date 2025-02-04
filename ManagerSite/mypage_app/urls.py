@@ -17,8 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from . import views
 
 app_name = 'mypage_app'
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='mypage_app/mypage.html'), name='mypage')
+#    path('', TemplateView.as_view(template_name='mypage_app/mypage.html'), name='mypage')
+    path('', views.mypage_view, name='mypage'),
 ]

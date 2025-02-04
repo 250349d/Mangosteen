@@ -80,7 +80,8 @@ def create_view(request):
         if form.is_valid():
             form.save()
             return redirect('manager_app:list')
-    form = ManagerCreationForm()
+    else:
+        form = ManagerCreationForm()
     param = {
         'form': form,
         'department_groups': department_groups

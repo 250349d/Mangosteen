@@ -62,13 +62,13 @@
         {% elif object.status == '2' %}
           <td>承認待ち</td>
         {% elif object.status == '3' %}
-          <td>再申請待ち</td>
+          <td>支払い待ち</td>
 	{% elif object.status == '4' %} 
           <td>配達完了</td>
 	{% elif object.status == 'C' %} 
 	  <td>キャンセル</td>
         {% else %}
-	  <td>エラー</td>
+	  <td>エラー発生</td>
         {% endif %}
 	<td>
           <a href="{% url 'task_app:detail' task_id=object.id %}">詳細</a>

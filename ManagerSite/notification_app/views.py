@@ -70,7 +70,8 @@ def create_view(request):
         if form.is_valid():
             form.save()
             return redirect(to="/notification-info/")
-    form = NotificationForm()
+    else:
+        form = NotificationForm()
     param = {
         'department_groups': department_groups,
         'form': form

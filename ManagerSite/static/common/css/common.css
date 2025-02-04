@@ -260,3 +260,23 @@ aside p {
     color: #ffffff;
     text-align: left;
 }
+textarea.notification_text {
+    width: 70%;
+    height: 250px;
+    padding: 15px;
+    border: 2px solid #748ca5;
+    border-radius: 10px;
+    box-sizing: border-box;
+    resize: none;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+textarea.notification_text:focus {
+    outline: none;
+    border-color: #009879;
+    box-shadow: 0 0 10px rgba(0, 152, 121, 0.5);
+}

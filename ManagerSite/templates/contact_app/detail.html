@@ -25,13 +25,24 @@
                     </h2>
                 </header>
 		<table>
-      {% for object in objects %}
-        {{ object.id }}
-        {{ object.title }}
-        {{ object.content }}
-        {{ object.created_at }}
-      {% endfor %}
+			{% for object in objects %}
+      <tr>
+                    <th>お問い合わせID</th>
+		<td>{{ object.id }}</td>
+                </tr>
+                <tr>
+                    <th>件名</th>
+                    <td>{{ object.title }}</td>
+                </tr>
+                <tr>
+                    <th>作成日時</th>
+                    <td>{{ object.created_at }}</td>
+                </tr>
   </table>
+                  <tr>
+                        <textarea readonly class="notification_text">{{ object.content }}</textarea>
+                </tr>
+		{% endfor %}
   <p class="back-button"><a href="{% url 'contact_app:list' %}">戻る</a></p>
   </article>
 

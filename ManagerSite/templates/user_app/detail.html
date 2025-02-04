@@ -79,7 +79,7 @@
     <form action="{% url 'user_app:detail' user_id=object.id %}" method="post">
       {% csrf_token %}
   <fieldset>
-<legend>権限を変更してください</legend>
+<legend>活動権限を変更してください（活動権限がFalseになるとユーザーはこのサイトからバンされ，一切の活動を禁じられます）</legend>
     <div>
       {% if object.is_active %}
       <input type="radio" id="active1" name="is_active" value=True checked />

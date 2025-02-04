@@ -55,22 +55,13 @@ def update_filtered_object_false(expression):
 def delete_object(expression):
     with connections["user_data"].cursor() as cursor:
         try:
-            cursor.execute("SELECT * FROM client_app_task WHERE (client_id=%s OR worker_id=%s) AND status='0'", [str(expression), str(expression)])
+            cursor.execute("SELECT * FROM client_app_task WHERE (client_id=%s OR worker_id=%s) AND (status='0' OR status='1' OR status='2' OR status='3')", [str(expression), str(expression)])
             results = namedtuplefetchall(cursor)
         except TypeError:
             print('TypeError')
             results = -1
-    if len(results) > 0 :
-        return "not exist user"
-    with connections["user_data"].cursor() as cursor:
-        try:
-            cursor.execute("SELECT * FROM client_app_task WHERE (client_id=%s OR worker_id=%s) AND status='0'", [str(expression), str(expression)])
-            results = namedtuplefetchall(cursor)
-        except TypeError:
-            print('TypeError')
-            results = -1
-    if len(results) > 0 :
-        return "can't delete a user"
+    if not(results==None or len(results) < 1):
+        return -1
     with connections["user_data"].cursor() as cursor:
         """
         update & delete
@@ -80,9 +71,11 @@ def delete_object(expression):
             cursor.execute("UPDATE client_app_task SET worker_id = 1 WHERE worker_id=%s", [str(expression)])
             cursor.execute("UPDATE send_contact_app_contact SET user_id = 1 WHERE user_id=%s", [str(expression)])
             cursor.execute("DELETE FROM user_app_customuser WHERE id=%s", [str(expression)])
+            results = 1
         except TypeError:
             print('TypeError')
-        return "deleted a user"
+            results = -1
+        return results
 
 @login_required
 def list_view(request):
@@ -108,6 +101,9 @@ def detail_view(request, user_id):
     objects = get_filtered_objects_id(user_id)
     if objects == None or len(objects) < 1:
         return redirect(to='/notfound/')
+    for object in objects:
+        if object.first_name == "None":
+            return redirect(to='/deleted/')
     if request.method == 'POST':
         data = request.POST
         if data.get("is_active") == 'True':
@@ -126,5 +122,12 @@ def detail_view(request, user_id):
 
 @login_required
 def delete_view(request, user_id):
-    message = delete_object(user_id)
-    return redirect(to='/user-info/')
+    objects = get_filtered_objects_id(user_id)
+    if objects == None or len(objects) < 1:
+        return redirect(to='/notfound/')
+    for object in objects:
+        if object.first_name == "None":
+            return redirect(to='/deleted/')
+    if delete_object(user_id) < 0:
+        return HttpResponse("配達中の依頼があり，削除できません")
+    return redirect('user_app:list')

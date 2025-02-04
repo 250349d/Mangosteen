@@ -7,7 +7,7 @@ register = template.Library()
 
 @register.simple_tag
 def get_return_link(request):
-    top_page = resolve_url('home_app:homepage')  # 最新の日記一覧
+    top_page = resolve_url('mypage_app:mypage')  # 最新の日記一覧
     referer = request.environ.get('HTTP_REFERER')  # これが、前ページのURL
 
     # URL直接入力やお気に入りアクセスのときはリファラがないので、トップぺージに戻す
